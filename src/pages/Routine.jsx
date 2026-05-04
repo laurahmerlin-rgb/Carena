@@ -47,11 +47,14 @@ export default function Routine() {
 User Profile:
 - Skin type: ${profile.skin_type || 'Unknown'}
 - Hair type: ${profile.hair_type || 'Unknown'}
+- Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
 - Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 
 Their routine products:
 ${routineProducts.map(p => `- ${p.name} (${p.brand || 'unknown brand'}) - ${p.routine_step} - ${p.routine_time}`).join('\n')}
+
+Skin conditions are especially important — flag any ingredients that could aggravate their conditions.
 
 Provide:
 1. An overall routine score (1-10)
@@ -86,6 +89,7 @@ Provide:
 User Profile:
 - Skin type: ${profile.skin_type || 'Unknown'}
 - Hair type: ${profile.hair_type || 'Unknown'}
+- Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
 - Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 

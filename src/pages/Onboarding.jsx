@@ -33,6 +33,20 @@ const GOALS = [
   { label: 'Frizz control', icon: '✂️', description: 'Smooth & manageable hair' },
 ];
 
+const SKIN_CONDITIONS = [
+  { label: 'Acne / Breakouts', icon: '🔴', description: 'Pimples, whiteheads, blackheads' },
+  { label: 'Rosacea', icon: '🌹', description: 'Redness, visible blood vessels' },
+  { label: 'Eczema', icon: '🩹', description: 'Itchy, inflamed, flaky patches' },
+  { label: 'Psoriasis', icon: '🔶', description: 'Thick, scaly, itchy skin patches' },
+  { label: 'Hyperpigmentation', icon: '🟤', description: 'Dark spots, uneven skin tone' },
+  { label: 'Melasma', icon: '🫙', description: 'Brown or gray-brown patches' },
+  { label: 'Perioral dermatitis', icon: '💋', description: 'Rash around the mouth area' },
+  { label: 'Contact dermatitis', icon: '🤧', description: 'Allergic skin reactions' },
+  { label: 'Keratosis pilaris', icon: '🫧', description: 'Rough bumps on arms or cheeks' },
+  { label: 'Seborrheic dermatitis', icon: '🧫', description: 'Flaky scalp & oily patches' },
+  { label: 'None', icon: '✅', description: 'No specific skin conditions' },
+];
+
 const SENSITIVITIES = [
   { label: 'Fragrance', icon: '🌺' },
   { label: 'Sulfates', icon: '🧪' },
@@ -51,6 +65,7 @@ export default function Onboarding() {
     skin_type: '',
     hair_type: '',
     goals: [],
+    skin_conditions: [],
     sensitivities: [],
   });
 
@@ -60,6 +75,19 @@ export default function Onboarding() {
       goals: prev.goals.includes(goal)
         ? prev.goals.filter(g => g !== goal)
         : [...prev.goals, goal]
+    }));
+  };
+
+  const toggleCondition = (c) => {
+    if (c === 'None') {
+      setProfile(prev => ({ ...prev, skin_conditions: ['None'] }));
+      return;
+    }
+    setProfile(prev => ({
+      ...prev,
+      skin_conditions: prev.skin_conditions.includes(c)
+        ? prev.skin_conditions.filter(x => x !== c)
+        : [...prev.skin_conditions.filter(x => x !== 'None'), c]
     }));
   };
 
@@ -90,7 +118,7 @@ export default function Onboarding() {
             title="Your skin & hair"
             subtitle="Tell us about your skin and hair type so we can personalize your experience."
             step={0}
-            totalSteps={3}
+            totalSteps={4}
             onNext={() => setStep(1)}
           >
             <div className="space-y-6">
@@ -130,7 +158,7 @@ export default function Onboarding() {
             title="Your goals"
             subtitle="Select all the goals you'd like to work towards. We'll tailor recommendations for you."
             step={1}
-            totalSteps={3}
+            totalSteps={4}
             onNext={() => setStep(2)}
             onBack={() => setStep(0)}
           >
@@ -149,13 +177,36 @@ export default function Onboarding() {
 
         {step === 2 && (
           <OnboardingStep
+            key="conditions"
+            title="Skin conditions"
+            subtitle="Do you have any skin conditions? We'll factor these into every product analysis."
+            step={2}
+            totalSteps={4}
+            onNext={() => setStep(3)}
+            onBack={() => setStep(1)}
+          >
+            <div className="grid grid-cols-1 gap-2">
+              {SKIN_CONDITIONS.map(c => (
+                <SelectableChip
+                  key={c.label}
+                  {...c}
+                  selected={profile.skin_conditions.includes(c.label)}
+                  onClick={() => toggleCondition(c.label)}
+                />
+              ))}
+            </div>
+          </OnboardingStep>
+        )}
+
+        {step === 3 && (
+          <OnboardingStep
             key="sensitivities"
             title="Sensitivities"
             subtitle="Are there any ingredients you want to avoid? We'll flag them for you."
-            step={2}
-            totalSteps={3}
+            step={3}
+            totalSteps={4}
             onNext={handleSave}
-            onBack={() => setStep(1)}
+            onBack={() => setStep(2)}
             nextLabel="Get Started"
           >
             <div className="grid grid-cols-1 gap-2">

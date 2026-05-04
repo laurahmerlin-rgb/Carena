@@ -65,6 +65,11 @@ export default function Home() {
                 {profile.hair_type} hair
               </span>
             )}
+            {profile.skin_conditions?.filter(c => c !== 'None').map(c => (
+              <span key={c} className="text-xs px-3 py-1.5 rounded-full bg-destructive/10 text-destructive font-medium">
+                {c}
+              </span>
+            ))}
             <button
               onClick={() => navigate('/onboarding')}
               className="text-xs px-3 py-1.5 rounded-full border border-dashed border-primary/40 text-primary font-medium hover:bg-primary/5 transition-colors"

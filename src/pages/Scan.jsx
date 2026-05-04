@@ -51,6 +51,7 @@ Ingredients: ${(extraction.ingredients || []).join(', ')}
 User Profile:
 - Skin type: ${profile.skin_type || 'Unknown'}
 - Hair type: ${profile.hair_type || 'Unknown'}
+- Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
 - Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 
