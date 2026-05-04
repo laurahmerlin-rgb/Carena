@@ -93,7 +93,7 @@ Also provide:
 
     // Save product
     const product = await base44.entities.Product.create({
-      name: extraction.name,
+      name: extraction.name || 'Unknown Product',
       brand: extraction.brand,
       category: extraction.category,
       image_url: file_url,
