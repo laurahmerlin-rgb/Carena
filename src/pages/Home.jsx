@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
-import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen } from 'lucide-react';
+import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompareArrows } from 'lucide-react';
 import { motion } from 'framer-motion';
 import QuickAction from '@/components/home/QuickAction';
 import { Button } from '@/components/ui/button';
@@ -103,6 +103,23 @@ export default function Home() {
             gradient="bg-gradient-to-br from-foreground/80 to-foreground/60"
           />
         </div>
+      </div>
+
+      {/* Compare CTA */}
+      <div className="px-6 mb-4">
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          onClick={() => navigate('/compare')}
+          className="w-full p-4 rounded-2xl bg-card border border-border flex items-center justify-between"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-accent flex items-center justify-center">
+              <GitCompareArrows className="w-4 h-4 text-primary" />
+            </div>
+            <p className="font-medium text-sm">Compare Products</p>
+          </div>
+          <ArrowRight className="w-4 h-4 text-muted-foreground" />
+        </motion.button>
       </div>
 
       {/* Glossary CTA */}
