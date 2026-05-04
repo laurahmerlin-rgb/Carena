@@ -49,6 +49,7 @@ User Profile:
 - Hair type: ${profile.hair_type || 'Unknown'}
 - Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
+- Climate: ${profile.climate || 'Unknown'}
 - Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 
 Their routine products:
@@ -91,6 +92,7 @@ User Profile:
 - Hair type: ${profile.hair_type || 'Unknown'}
 - Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
+- Climate: ${profile.climate || 'Unknown'}
 - Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 
 Current routine products: ${routineProducts.map(p => p.name).join(', ') || 'None'}

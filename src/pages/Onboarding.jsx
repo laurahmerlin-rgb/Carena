@@ -47,6 +47,15 @@ const SKIN_CONDITIONS = [
   { label: 'None', icon: '✅', description: 'No specific skin conditions' },
 ];
 
+const CLIMATES = [
+  { label: 'Hot & Humid', icon: '🌴', description: 'Tropical, muggy, sweaty summers' },
+  { label: 'Hot & Dry', icon: '🏜️', description: 'Desert-like, low humidity, intense sun' },
+  { label: 'Cold & Dry', icon: '❄️', description: 'Harsh winters, heated indoors, low moisture' },
+  { label: 'Cold & Humid', icon: '🌧️', description: 'Rainy, overcast, damp' },
+  { label: 'Mild & Temperate', icon: '🌤️', description: 'Moderate seasons, balanced humidity' },
+  { label: 'Variable / 4 Seasons', icon: '🍂', description: 'Distinct seasonal changes throughout the year' },
+];
+
 const SENSITIVITIES = [
   { label: 'Fragrance', icon: '🌺' },
   { label: 'Sulfates', icon: '🧪' },
@@ -66,6 +75,7 @@ export default function Onboarding() {
     hair_type: '',
     goals: [],
     skin_conditions: [],
+    climate: '',
     sensitivities: [],
   });
 
@@ -118,7 +128,7 @@ export default function Onboarding() {
             title="Your skin & hair"
             subtitle="Tell us about your skin and hair type so we can personalize your experience."
             step={0}
-            totalSteps={4}
+            totalSteps={5}
             onNext={() => setStep(1)}
           >
             <div className="space-y-6">
@@ -158,7 +168,7 @@ export default function Onboarding() {
             title="Your goals"
             subtitle="Select all the goals you'd like to work towards. We'll tailor recommendations for you."
             step={1}
-            totalSteps={4}
+            totalSteps={5}
             onNext={() => setStep(2)}
             onBack={() => setStep(0)}
           >
@@ -181,7 +191,7 @@ export default function Onboarding() {
             title="Skin conditions"
             subtitle="Do you have any skin conditions? We'll factor these into every product analysis."
             step={2}
-            totalSteps={4}
+            totalSteps={5}
             onNext={() => setStep(3)}
             onBack={() => setStep(1)}
           >
@@ -200,13 +210,36 @@ export default function Onboarding() {
 
         {step === 3 && (
           <OnboardingStep
+            key="climate"
+            title="Your climate"
+            subtitle="Where you live affects your skin and hair. Tell us your typical weather so we can tailor recommendations."
+            step={3}
+            totalSteps={5}
+            onNext={() => setStep(4)}
+            onBack={() => setStep(2)}
+          >
+            <div className="grid grid-cols-1 gap-2">
+              {CLIMATES.map(c => (
+                <SelectableChip
+                  key={c.label}
+                  {...c}
+                  selected={profile.climate === c.label}
+                  onClick={() => setProfile(p => ({ ...p, climate: c.label }))}
+                />
+              ))}
+            </div>
+          </OnboardingStep>
+        )}
+
+        {step === 4 && (
+          <OnboardingStep
             key="sensitivities"
             title="Sensitivities"
             subtitle="Are there any ingredients you want to avoid? We'll flag them for you."
-            step={3}
-            totalSteps={4}
+            step={4}
+            totalSteps={5}
             onNext={handleSave}
-            onBack={() => setStep(2)}
+            onBack={() => setStep(3)}
             nextLabel="Get Started"
           >
             <div className="grid grid-cols-1 gap-2">

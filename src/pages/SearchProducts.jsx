@@ -62,6 +62,7 @@ User Profile:
 - Hair type: ${profile.hair_type || 'Unknown'}
 - Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
+- Climate: ${profile.climate || 'Unknown'}
 - Ingredient sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 
 IMPORTANT — Scoring rules:
