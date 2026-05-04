@@ -1,0 +1,103 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Product brand"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "skincare",
+        "haircare",
+        "bodycare",
+        "other"
+      ],
+      "description": "Product category"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Product image URL"
+    },
+    "ingredients": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of ingredients"
+    },
+    "analysis": {
+      "type": "object",
+      "description": "AI analysis results",
+      "properties": {
+        "score": {
+          "type": "number"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "pros": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "brand": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "in_routine": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether product is in routine"
+    },
+    "routine_step": {
+      "type": "string",
+      "description": "Step in routine (e.g. cleanser, moisturizer)"
+    },
+    "routine_time": {
+      "type": "string",
+      "enum": [
+        "morning",
+        "evening",
+        "both"
+      ],
+      "description": "When to use in routine"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

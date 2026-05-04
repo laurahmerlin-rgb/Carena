@@ -1,0 +1,190 @@
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { base44 } from '@/api/base44Client';
+import { Button } from '@/components/ui/button';
+import { Camera, Upload, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+export default function Scan() {
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [preview, setPreview] = useState(null);
+
+  const handleFile = async (file) => {
+    if (!file) return;
+    setPreview(URL.createObjectURL(file));
+    setUploading(true);
+
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setUploading(false);
+    setAnalyzing(true);
+
+    // Get user profile for personalized analysis
+    const user = await base44.auth.me();
+    const profile = user.profile || {};
+
+    // Extract product info from image
+    const extraction = await base44.integrations.Core.InvokeLLM({
+      prompt: `Analyze this product image. Extract the product name, brand, category (skincare/haircare/bodycare/other), and list of ingredients you can see. If you can't see ingredients, make your best guess based on the product type.`,
+      file_urls: [file_url],
+      response_json_schema: {
+        type: "object",
+        properties: {
+          name: { type: "string" },
+          brand: { type: "string" },
+          category: { type: "string", enum: ["skincare", "haircare", "bodycare", "other"] },
+          ingredients: { type: "array", items: { type: "string" } }
+        }
+      }
+    });
+
+    // Analyze product against user profile
+    const analysis = await base44.integrations.Core.InvokeLLM({
+      prompt: `You are a skin/hair care expert. Analyze this product for the user.
+
+Product: ${extraction.name} by ${extraction.brand}
+Category: ${extraction.category}
+Ingredients: ${(extraction.ingredients || []).join(', ')}
+
+User Profile:
+- Skin type: ${profile.skin_type || 'Unknown'}
+- Hair type: ${profile.hair_type || 'Unknown'}
+- Goals: ${(profile.goals || []).join(', ') || 'None specified'}
+- Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
+
+Give a personalized score (1-10), summary, pros, cons, warnings (especially for sensitivities), and suggest 3 alternative products.`,
+      response_json_schema: {
+        type: "object",
+        properties: {
+          score: { type: "number" },
+          summary: { type: "string" },
+          pros: { type: "array", items: { type: "string" } },
+          cons: { type: "array", items: { type: "string" } },
+          warnings: { type: "array", items: { type: "string" } },
+          alternatives: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                name: { type: "string" },
+                brand: { type: "string" },
+                reason: { type: "string" }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    // Save product
+    const product = await base44.entities.Product.create({
+      name: extraction.name,
+      brand: extraction.brand,
+      category: extraction.category,
+      image_url: file_url,
+      ingredients: extraction.ingredients,
+      analysis
+    });
+
+    setAnalyzing(false);
+    navigate(`/product/${product.id}`);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <div className="flex items-center gap-3 px-6 pt-8 pb-6">
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
+          <ArrowLeft className="w-5 h-5" />
+        </Button>
+        <h1 className="font-heading text-2xl font-semibold">Scan Product</h1>
+      </div>
+
+      <div className="px-6">
+        {/* Upload area */}
+        {!preview && !analyzing && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center"
+          >
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full aspect-square max-w-sm rounded-3xl border-2 border-dashed border-primary/30 bg-primary/5 flex flex-col items-center justify-center gap-4 hover:bg-primary/10 transition-colors"
+            >
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+                <Camera className="w-10 h-10 text-primary" />
+              </div>
+              <div className="text-center">
+                <p className="font-medium">Tap to scan a product</p>
+                <p className="text-sm text-muted-foreground mt-1">Take a photo or upload from gallery</p>
+              </div>
+            </button>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              className="hidden"
+              onChange={(e) => handleFile(e.target.files[0])}
+            />
+
+            <div className="flex items-center gap-4 mt-6 w-full max-w-sm">
+              <div className="h-px flex-1 bg-border" />
+              <span className="text-xs text-muted-foreground">or</span>
+              <div className="h-px flex-1 bg-border" />
+            </div>
+
+            <Button
+              variant="outline"
+              className="mt-4 rounded-full gap-2"
+              onClick={() => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = (e) => handleFile(e.target.files[0]);
+                input.click();
+              }}
+            >
+              <Upload className="w-4 h-4" />
+              Upload from gallery
+            </Button>
+          </motion.div>
+        )}
+
+        {/* Preview + Loading */}
+        {preview && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center"
+          >
+            <div className="relative w-full max-w-sm">
+              <img src={preview} alt="Product" className="w-full rounded-3xl object-cover" />
+              {(uploading || analyzing) && (
+                <div className="absolute inset-0 bg-background/80 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center gap-4">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                    {analyzing ? (
+                      <Sparkles className="w-8 h-8 text-primary animate-pulse" />
+                    ) : (
+                      <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                    )}
+                  </div>
+                  <div className="text-center">
+                    <p className="font-medium">{uploading ? 'Uploading...' : 'Analyzing product...'}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {analyzing ? 'Reading ingredients & personalizing results' : 'Almost there'}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}
