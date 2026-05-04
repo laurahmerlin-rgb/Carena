@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import ScoreRing from '@/components/product/ScoreRing';
 import InsightsList from '@/components/product/InsightsList';
 import AlternativesList from '@/components/product/AlternativesList';
+import IngredientsList from '@/components/product/IngredientsList';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function ProductResult() {
@@ -111,18 +112,7 @@ export default function ProductResult() {
               cons={analysis.cons}
               warnings={analysis.warnings}
             />
-            {product.ingredients?.length > 0 && (
-              <div className="mt-6">
-                <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">Ingredients</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {product.ingredients.map((ing, i) => (
-                    <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-muted text-muted-foreground">
-                      {ing}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+            <IngredientsList ingredients={product.ingredients} />
           </TabsContent>
 
           <TabsContent value="alternatives">

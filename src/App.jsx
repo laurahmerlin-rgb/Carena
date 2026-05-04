@@ -12,6 +12,7 @@ import Scan from './pages/Scan';
 import SearchProducts from './pages/SearchProducts';
 import ProductResult from './pages/ProductResult';
 import Routine from './pages/Routine';
+import Glossary from './pages/Glossary';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -41,6 +42,7 @@ const AuthenticatedApp = () => {
       <Route path="/search" element={<SearchProducts />} />
       <Route path="/product/:id" element={<ProductResult />} />
       <Route path="/routine" element={<Routine />} />
+      <Route path="/glossary" element={<Glossary />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
