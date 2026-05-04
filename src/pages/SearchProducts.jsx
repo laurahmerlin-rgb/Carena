@@ -51,7 +51,7 @@ Return a list of 5 real, well-known products that match this search. Include the
     const profile = user.profile || {};
 
     const analysis = await base44.integrations.Core.InvokeLLM({
-      prompt: `You are a skin/hair care expert. Analyze this product for the user.
+      prompt: `You are a skin/hair care expert. Give a PERSONALIZED analysis of this product specifically for this user — not a generic review.
 
 Product: ${product.name} by ${product.brand}
 Category: ${product.category}
@@ -62,14 +62,27 @@ User Profile:
 - Hair type: ${profile.hair_type || 'Unknown'}
 - Skin conditions: ${(profile.skin_conditions || []).join(', ') || 'None'}
 - Goals: ${(profile.goals || []).join(', ') || 'None specified'}
-- Sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
+- Ingredient sensitivities: ${(profile.sensitivities || []).join(', ') || 'None'}
 
-Give a personalized score (1-10), summary, list the typical ingredients of this product, pros, cons, warnings (especially for sensitivities), and suggest 3 alternative products.`,
+IMPORTANT — Scoring rules:
+- The score (1–10) must reflect how well this product matches THIS user's specific needs, not the product's general quality.
+- A great product can score low if it doesn't align with this user's skin type, conditions, or goals.
+- A basic product can score high if it perfectly matches their needs.
+- score_explanation must be 2–3 sentences clearly explaining WHY this specific user got this score — reference their skin type, conditions, goals, or sensitivities directly.
+
+Also provide:
+- summary: brief 1–2 sentence overview of what the product does
+- ingredients: the typical key ingredients of this product
+- pros: benefits specifically relevant to this user's profile
+- cons: drawbacks specifically relevant to this user's profile
+- warnings: any ingredients that conflict with their sensitivities or could aggravate their conditions
+- alternatives: 3 better-suited alternatives for this specific user`,
       add_context_from_internet: true,
       response_json_schema: {
         type: "object",
         properties: {
           score: { type: "number" },
+          score_explanation: { type: "string" },
           summary: { type: "string" },
           ingredients: { type: "array", items: { type: "string" } },
           pros: { type: "array", items: { type: "string" } },
@@ -97,6 +110,7 @@ Give a personalized score (1-10), summary, list the typical ingredients of this 
       ingredients: analysis.ingredients || [],
       analysis: {
         score: analysis.score,
+        score_explanation: analysis.score_explanation,
         summary: analysis.summary,
         pros: analysis.pros,
         cons: analysis.cons,

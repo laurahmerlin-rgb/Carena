@@ -81,10 +81,17 @@ export default function ProductResult() {
             )}
             <div className="flex-1">
               <ScoreRing score={analysis.score || 0} />
+              <p className="text-xs text-muted-foreground mt-1 text-center">Your match score</p>
             </div>
           </div>
+          {analysis.score_explanation && (
+            <div className="mt-4 p-3 rounded-xl bg-primary/5 border border-primary/15">
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-1">Why this score?</p>
+              <p className="text-sm leading-relaxed">{analysis.score_explanation}</p>
+            </div>
+          )}
           {analysis.summary && (
-            <p className="text-sm text-muted-foreground mt-4 leading-relaxed">{analysis.summary}</p>
+            <p className="text-sm text-muted-foreground mt-3 leading-relaxed">{analysis.summary}</p>
           )}
         </motion.div>
       </div>
