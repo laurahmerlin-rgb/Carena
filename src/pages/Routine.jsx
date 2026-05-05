@@ -158,11 +158,11 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
 
   return (
     <div className="min-h-screen bg-background pb-8">
-      <div className="flex items-center gap-3 px-6 pt-8 pb-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
+      <div className="flex items-center gap-3 px-6 pt-10 pb-4">
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full bg-muted/60">
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h1 className="font-heading text-2xl font-semibold">My Routine</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight">My Routine</h1>
       </div>
 
       <div className="px-6">

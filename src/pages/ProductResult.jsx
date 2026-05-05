@@ -55,12 +55,12 @@ export default function ProductResult() {
   return (
     <div className="min-h-screen bg-background pb-8">
       {/* Header */}
-      <div className="flex items-center gap-3 px-6 pt-8 pb-4">
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
+      <div className="flex items-center gap-3 px-6 pt-10 pb-4">
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full bg-muted/60 shrink-0">
           <ArrowLeft className="w-5 h-5" />
         </Button>
         <div className="flex-1 min-w-0">
-          <h1 className="font-heading text-xl font-semibold truncate">{product.name}</h1>
+          <h1 className="font-heading text-xl font-semibold truncate tracking-tight">{product.name}</h1>
           {product.brand && <p className="text-sm text-muted-foreground">{product.brand}</p>}
         </div>
       </div>
