@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Sun, Moon, Sparkles, Trash2, Loader2, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Sun, Moon, Sparkles, Trash2, Loader2, Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useQueryClient } from '@tanstack/react-query';
+import AddProductForm from '@/components/routine/AddProductForm';
 
 const STEP_ORDER = ['cleanser', 'toner', 'serum', 'moisturizer', 'sunscreen', 'mask', 'shampoo', 'conditioner', 'treatment', 'oil', 'other'];
 
@@ -16,6 +16,7 @@ export default function Routine() {
   const [analyzing, setAnalyzing] = useState(false);
   const [routineAnalysis, setRoutineAnalysis] = useState(null);
   const [suggestions, setSuggestions] = useState(null);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   const { data: routineProducts, isLoading } = useQuery({
     queryKey: ['routine-products'],
@@ -162,7 +163,11 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
         <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full bg-muted/60">
           <ArrowLeft className="w-5 h-5" />
         </Button>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">My Routine</h1>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight flex-1">My Routine</h1>
+        <Button size="sm" className="rounded-full gap-1.5 text-xs h-8 px-3" onClick={() => setShowAddForm(true)}>
+          <Plus className="w-3.5 h-3.5" />
+          Add product
+        </Button>
       </div>
 
       <div className="px-6">
@@ -180,10 +185,16 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
                   <Sparkles className="w-8 h-8 text-muted-foreground" />
                 </div>
                 <p className="font-medium">No products yet</p>
-                <p className="text-sm text-muted-foreground mt-1">Scan or search products to add them to your routine</p>
-                <Button className="mt-4 rounded-full" onClick={() => navigate('/')}>
-                  Get Started
-                </Button>
+                <p className="text-sm text-muted-foreground mt-1">Add products manually or scan/search them</p>
+                <div className="flex gap-2 justify-center mt-4">
+                  <Button className="rounded-full gap-1.5" onClick={() => setShowAddForm(true)}>
+                    <Plus className="w-4 h-4" />
+                    Add a product
+                  </Button>
+                  <Button variant="outline" className="rounded-full" onClick={() => navigate('/')}>
+                    Scan / Search
+                  </Button>
+                </div>
               </div>
             ) : (
               <div className="space-y-6">
@@ -314,6 +325,15 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
           </TabsContent>
         </Tabs>
       </div>
+
+      <AnimatePresence>
+        {showAddForm && (
+          <AddProductForm
+            onClose={() => setShowAddForm(false)}
+            onAdded={() => queryClient.invalidateQueries({ queryKey: ['routine-products'] })}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
