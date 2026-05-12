@@ -3,7 +3,10 @@
  * 1. "Skincare ingredients recommended by cosmetic dermatologists: A Delphi consensus study"
  *    (Journal of the American Academy of Dermatology, 2025) — 62 dermatologists, 43 centers,
  *    23 ingredients achieving consensus across 7 skin concerns.
+ *    PubMed: https://pubmed.ncbi.nlm.nih.gov/40233838/
  * 2. FDA Cosmetic Ingredients pages: https://www.fda.gov/cosmetics/cosmetic-products-ingredients
+ * 3. NCBI PubMed & PubMed Central (NIH): https://www.ncbi.nlm.nih.gov
+ *    Peer-reviewed clinical studies and systematic reviews for individual ingredients.
  */
 
 export const INGREDIENT_GLOSSARY = [
@@ -16,6 +19,10 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Achieved 96.8% consensus among cosmetic dermatologists for lines & wrinkles (Delphi study). Also top-recommended for acne, dark spots, large pores, and oily skin. Speeds cell turnover, stimulates collagen production, and fades dark spots. Use at night; start slowly as it can cause initial dryness and irritation.",
     concerns: ["lines_wrinkles", "acne", "dark_spots", "large_pores", "oily_skin"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Retinol: The Ideal Retinoid for Cosmetic Solutions", url: "https://pubmed.ncbi.nlm.nih.gov/35816071/" },
+      { title: "Evidence for the Efficacy of Over-the-counter Vitamin A Cosmetic Products", url: "https://pubmed.ncbi.nlm.nih.gov/34980969/" },
+    ],
     icon: "⏳"
   },
   {
@@ -25,6 +32,10 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Achieved 88.7% consensus for lines & wrinkles and strong consensus for dark spots (Delphi study). Powerful antioxidant that neutralizes free radicals, stimulates collagen synthesis, brightens skin tone, and protects against UV-induced damage. Most effective at L-ascorbic acid concentrations of 10–20%.",
     concerns: ["lines_wrinkles", "dark_spots"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Topical Vitamin C and the Skin: Mechanisms of Action and Clinical Applications", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5605218/" },
+      { title: "The Roles of Vitamin C in Skin Health", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5579659/" },
+    ],
     icon: "🍊"
   },
   {
@@ -57,6 +68,10 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["acne", "large_pores", "oily_skin"],
     delphi_consensus: true,
     fda_note: "FDA-recognized OTC acne active ingredient at 0.5–2% concentration.",
+    pubmed_refs: [
+      { title: "Clinical Efficacy of a Salicylic Acid-Containing Gel on Acne Vulgaris", url: "https://pubmed.ncbi.nlm.nih.gov/40682377/" },
+      { title: "Treatment of acne vulgaris with salicylic acid pads", url: "https://pubmed.ncbi.nlm.nih.gov/1535287/" },
+    ],
     icon: "🎯"
   },
   {
@@ -76,6 +91,10 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Delphi consensus for acne and redness. Kills acne-causing bacteria, reduces post-acne dark marks, and calms redness associated with rosacea. Safe during pregnancy. Available OTC at lower concentrations and as a prescription at 15–20%.",
     concerns: ["acne", "redness", "dark_spots"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Azelaic acid 15% gel in the treatment of rosacea", url: "https://pubmed.ncbi.nlm.nih.gov/18803456/" },
+      { title: "A systematic review to evaluate the efficacy of azelaic acid", url: "https://pubmed.ncbi.nlm.nih.gov/37550898/" },
+    ],
     icon: "🌿"
   },
   {
@@ -85,6 +104,10 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Delphi consensus for acne, large pores, oily skin, and dark spots. Minimizes pore appearance, regulates sebum, fades hyperpigmentation, reduces redness, and strengthens the skin barrier. Well-tolerated by all skin types including sensitive skin.",
     concerns: ["acne", "large_pores", "oily_skin", "dark_spots", "redness"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Mechanistic Insights into the Multiple Functions of Niacinamide", url: "https://pubmed.ncbi.nlm.nih.gov/38671873/" },
+      { title: "Efficacy of ceramides and niacinamide-containing moisturizer in acne", url: "https://pubmed.ncbi.nlm.nih.gov/38299457/" },
+    ],
     icon: "⭐"
   },
 
@@ -96,6 +119,10 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Delphi consensus for redness. Clinically shown to calm inflammation, strengthen the skin barrier, and reduce redness. Active compounds (madecassoside, asiaticoside) support wound healing and collagen synthesis.",
     concerns: ["redness"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Pharmacological Effects of Centella asiatica on Skin Diseases", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8627341/" },
+      { title: "Centella asiatica in cosmetology", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3834700/" },
+    ],
     icon: "🌸"
   },
   {
@@ -117,6 +144,9 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["dark_spots", "lines_wrinkles", "dry_skin"],
     delphi_consensus: true,
     fda_note: "FDA-studied ingredient. AHAs increase UV sensitivity — always pair with SPF. FDA recommends ≤10% AHA with pH ≥3.5 for consumer safety.",
+    pubmed_refs: [
+      { title: "Glycolic acid peel therapy – a current review", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3875240/" },
+    ],
     icon: "✨"
   },
   {
@@ -146,6 +176,9 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Delphi consensus for dry skin. Naturally occurring humectant that can hold up to 1,000x its weight in water. Draws moisture from the environment into the skin and from deeper skin layers to the surface. Effective at multiple molecular weights for surface and deeper hydration.",
     concerns: ["dry_skin"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Benefits of topical hyaluronic acid for skin quality and signs of aging", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10078143/" },
+    ],
     icon: "💧"
   },
   {
@@ -155,6 +188,10 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Delphi consensus for dry skin. Ceramides make up approximately 50% of the skin's lipid barrier. Topical ceramides replenish depleted barrier lipids, lock in moisture, and protect against environmental irritants. Essential for eczema-prone and barrier-compromised skin.",
     concerns: ["dry_skin"],
     delphi_consensus: true,
+    pubmed_refs: [
+      { title: "Ceramides and Skin Health: New Insights", url: "https://pubmed.ncbi.nlm.nih.gov/39912256/" },
+      { title: "Skin hydration is significantly increased by a ceramide-formulated cream", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6197824/" },
+    ],
     icon: "🛡️"
   },
   {

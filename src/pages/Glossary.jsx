@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search } from 'lucide-react';
+import { ArrowLeft, Search, ExternalLink, ShieldCheck, FlaskConical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { INGREDIENT_GLOSSARY, CATEGORY_COLORS } from '@/data/ingredientGlossary';
 
@@ -85,11 +85,44 @@ export default function Glossary() {
                       {ing.category}
                     </span>
                   </div>
+                  <div className="flex gap-1.5 flex-wrap mb-1.5">
+                    {ing.delphi_consensus && (
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium">
+                        <ShieldCheck className="w-3 h-3" /> Delphi Consensus
+                      </span>
+                    )}
+                    {ing.fda_note && (
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium">
+                        <FlaskConical className="w-3 h-3" /> FDA Noted
+                      </span>
+                    )}
+                  </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">{ing.benefit}</p>
+                  {ing.fda_note && (
+                    <p className="text-xs text-blue-600 mt-1.5 leading-relaxed">
+                      <span className="font-medium">FDA: </span>{ing.fda_note}
+                    </p>
+                  )}
                   {ing.aliases.length > 0 && (
                     <p className="text-xs text-muted-foreground/60 mt-1.5">
                       Also known as: {ing.aliases.join(', ')}
                     </p>
+                  )}
+                  {ing.pubmed_refs?.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {ing.pubmed_refs.map((ref, idx) => (
+                        <a
+                          key={idx}
+                          href={ref.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
+                        >
+                          <ExternalLink className="w-3 h-3 shrink-0" />
+                          {ref.title}
+                        </a>
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>
