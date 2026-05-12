@@ -7,6 +7,10 @@
  * 2. FDA Cosmetic Ingredients pages: https://www.fda.gov/cosmetics/cosmetic-products-ingredients
  * 3. NCBI PubMed & PubMed Central (NIH): https://www.ncbi.nlm.nih.gov
  *    Peer-reviewed clinical studies and systematic reviews for individual ingredients.
+ * 4. EU CosIng (Cosmetic Ingredients Database) — European Commission
+ *    Regulation (EC) No 1223/2009 on cosmetic products.
+ *    https://ec.europa.eu/growth/tools-databases/cosing/
+ *    Provides INCI names, EU regulatory status (restricted/prohibited/allowed), and Annex references.
  */
 
 export const INGREDIENT_GLOSSARY = [
@@ -19,6 +23,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Achieved 96.8% consensus among cosmetic dermatologists for lines & wrinkles (Delphi study). Also top-recommended for acne, dark spots, large pores, and oily skin. Speeds cell turnover, stimulates collagen production, and fades dark spots. Use at night; start slowly as it can cause initial dryness and irritation.",
     concerns: ["lines_wrinkles", "acne", "dark_spots", "large_pores", "oily_skin"],
     delphi_consensus: true,
+    cosing_note: "EU CosIng: Retinol (Vitamin A) is listed as a restricted ingredient under Annex III of Regulation (EC) No 1223/2009. Face products max 0.3% retinol; body lotions max 0.3%; products for children under 3 and mucous membranes are prohibited. As of 2025, stricter limits apply for rinse-off products.",
     pubmed_refs: [
       { title: "Retinol: The Ideal Retinoid for Cosmetic Solutions", url: "https://pubmed.ncbi.nlm.nih.gov/35816071/" },
       { title: "Evidence for the Efficacy of Over-the-counter Vitamin A Cosmetic Products", url: "https://pubmed.ncbi.nlm.nih.gov/34980969/" },
@@ -46,6 +51,7 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["lines_wrinkles", "redness"],
     delphi_consensus: true,
     fda_note: "FDA recognizes zinc oxide and titanium dioxide as GRASE sunscreen active ingredients.",
+    cosing_note: "EU CosIng: Zinc Oxide (CI 77947) listed in Annex VI — max 25% as UV filter. Titanium Dioxide (CI 77891) listed in Annex VI — max 25% as UV filter. Both are approved permitted UV filters under Regulation (EC) No 1223/2009.",
     icon: "☀️"
   },
   {
@@ -56,6 +62,7 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["lines_wrinkles"],
     delphi_consensus: true,
     fda_note: "FDA has asked manufacturers for more safety data on 12 chemical sunscreen ingredients. They are not prohibited but further data is needed before GRASE classification.",
+    cosing_note: "EU CosIng: Avobenzone (Butyl Methoxydibenzoylmethane) in Annex VI — max 5%. Octocrylene max 10% (9% for children's sunscreen). Oxybenzone (Benzophenone-3) restricted to max 6%, prohibited in children under 2 and on large body areas for adults per SCCS opinion. Always check specific limits per active.",
     icon: "☀️"
   },
 
@@ -68,6 +75,7 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["acne", "large_pores", "oily_skin"],
     delphi_consensus: true,
     fda_note: "FDA-recognized OTC acne active ingredient at 0.5–2% concentration.",
+    cosing_note: "EU CosIng: Salicylic Acid listed in Annex III (restricted). In cosmetics (other than rinse-off hair products) max 2.0%; in rinse-off hair products max 3.0%. Prohibited in children's products where it may come into contact with mucous membranes.",
     pubmed_refs: [
       { title: "Clinical Efficacy of a Salicylic Acid-Containing Gel on Acne Vulgaris", url: "https://pubmed.ncbi.nlm.nih.gov/40682377/" },
       { title: "Treatment of acne vulgaris with salicylic acid pads", url: "https://pubmed.ncbi.nlm.nih.gov/1535287/" },
@@ -82,6 +90,7 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["acne"],
     delphi_consensus: true,
     fda_note: "FDA-approved OTC acne active ingredient.",
+    cosing_note: "EU CosIng: Benzoyl Peroxide is listed as a restricted substance in Annex III. Permitted in cosmetic preparations at max 0.7% for nail preparations only. It is not authorized as a general skin or acne cosmetic active in the EU — higher concentrations require medical prescription in the EU.",
     icon: "🎯"
   },
   {
@@ -144,6 +153,7 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["dark_spots", "lines_wrinkles", "dry_skin"],
     delphi_consensus: true,
     fda_note: "FDA-studied ingredient. AHAs increase UV sensitivity — always pair with SPF. FDA recommends ≤10% AHA with pH ≥3.5 for consumer safety.",
+    cosing_note: "EU CosIng: Glycolic Acid and other AHAs are listed in Annex III (restricted). For face: max 10% at pH ≥3.5 with UV protection labeling required. For rinse-off hair products: max 6.0%. Products must carry the warning 'Contains AHA. Avoid sun exposure when using this product.'",
     pubmed_refs: [
       { title: "Glycolic acid peel therapy – a current review", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3875240/" },
     ],
@@ -211,6 +221,7 @@ export const INGREDIENT_GLOSSARY = [
     concerns: ["dry_skin"],
     delphi_consensus: true,
     fda_note: "FDA-recognized OTC skin protectant ingredient.",
+    cosing_note: "EU CosIng: Petrolatum (White Petrolatum) is listed in Annex II (prohibited) unless the full refining history is known and proven to be non-carcinogenic. Only fully refined petrolatum that complies with purity specifications is permitted under Regulation (EC) No 1223/2009.",
     icon: "🛡️"
   },
   {
@@ -242,6 +253,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Widely used preservatives that prevent microbial growth and extend product shelf life. FDA has reviewed available data and does not have evidence that parabens in cosmetics pose a health risk, but continues to monitor emerging science.",
     concerns: [],
     fda_note: "FDA has reviewed available safety data and currently has no reason to believe parabens pose a hazard at concentrations used in cosmetics. FDA continues to evaluate new research.",
+    cosing_note: "EU CosIng: Parabens are individually listed in Annex V (permitted preservatives). Methylparaben and Ethylparaben max 0.4% (as acid) each; combined paraben total max 0.8%. Propylparaben and Butylparaben max 0.14% combined; prohibited in leave-on products for children under 3. Isopropylparaben, Isobutylparaben, Phenylparaben, Benzylparaben, and Pentylparaben are prohibited (Annex II).",
     icon: "⚠️"
   },
   {
@@ -251,6 +263,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Added scent. FDA notes fragrance is a leading cause of cosmetic-related contact dermatitis and allergic reactions. Fragrance components may not be individually disclosed on labels due to trade secret protections.",
     concerns: [],
     fda_note: "FDA notes fragrance is one of the most common causes of cosmetic-related allergic reactions. Sensitive skin types should patch-test fragranced products.",
+    cosing_note: "EU CosIng: Under Regulation (EC) No 1223/2009 (as amended by Regulation 2023/1545), 26 allergens must be individually labeled on EU cosmetics when above 0.001% in leave-on and 0.01% in rinse-off products. An expanded list of ~80 allergens requires labeling from 2026. 'Parfum' or 'Aroma' may mask multiple undisclosed components.",
     icon: "🌺"
   },
   {
@@ -260,6 +273,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Used as solvents and fixatives in fragrances and nail products. FDA has reviewed available data and found no reason to conclude phthalates in cosmetics pose a safety risk to consumers, but acknowledges ongoing scientific study.",
     concerns: [],
     fda_note: "FDA has reviewed safety data and found no cause for concern at current cosmetic use levels, but continues to monitor the science.",
+    cosing_note: "EU CosIng: Diethyl Phthalate (DEP) is currently permitted in EU cosmetics (not listed in Annex II prohibited list). However, the EU SCCS continues to reassess phthalates. DBP and DEHP are prohibited under Annex II.",
     icon: "⚠️"
   },
   {
@@ -269,6 +283,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Used in powders, eyeshadows, and blush to absorb moisture and improve texture. FDA actively tests cosmetic talc for asbestos contamination — a naturally occurring mineral that may be present in talc deposits.",
     concerns: [],
     fda_note: "FDA warns that talc may be contaminated with asbestos. FDA has conducted sampling programs to test commercial cosmetic talc products.",
+    cosing_note: "EU CosIng: Talc (Magnesium Hydrogen Metasilicate) is listed as permitted in EU cosmetics but must be free from asbestos fibers. SCCS has issued guidance requiring manufacturers to verify the absence of asbestiform fibers. Stricter controls apply for products used near children's airways.",
     icon: "⚠️"
   },
   {
@@ -277,6 +292,7 @@ export const INGREDIENT_GLOSSARY = [
     category: "Cleanser",
     benefit: "Surfactants that create lather and remove oil, dirt, and product buildup. Effective cleansers but can strip the skin's natural oils and disrupt the barrier, leading to dryness and irritation — especially with daily use on sensitive or dry skin.",
     concerns: [],
+    cosing_note: "EU CosIng: Sodium Lauryl Sulfate (SLS) and Sodium Laureth Sulfate (SLES) are permitted surfactants in EU cosmetics with no specific concentration restriction, but must comply with general cosmetic safety requirements. SLES may contain trace 1,4-dioxane — EU guidance requires manufacturers to minimize via purification.",
     icon: "⚠️"
   },
   {
@@ -286,6 +302,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Not an intentional ingredient — a manufacturing byproduct found in some products containing ethoxylated ingredients (like SLES). FDA monitors cosmetics for 1,4-dioxane levels and has set guidance for industry to minimize its presence, as it is a probable human carcinogen.",
     concerns: [],
     fda_note: "FDA identifies 1,4-dioxane as a potential cosmetic contaminant and a probable human carcinogen. FDA has issued guidance for industry to reduce levels through vacuum stripping during manufacturing.",
+    cosing_note: "EU CosIng: 1,4-Dioxane is listed in Annex II as a prohibited substance in cosmetic products. Products containing ethoxylated surfactants must be purified to ensure 1,4-dioxane is not present at detectable levels under EU law.",
     icon: "⚠️"
   },
 
@@ -367,6 +384,7 @@ export const INGREDIENT_GLOSSARY = [
     benefit: "Structural protein that makes up the hair shaft. Topical keratin treatments temporarily fill gaps in the hair cuticle, reducing frizz, adding shine, and improving manageability. Some keratin treatments contain formaldehyde — FDA has warned about hair smoothing products that release formaldehyde.",
     concerns: [],
     fda_note: "FDA has warned that some keratin hair smoothing products release formaldehyde or formaldehyde-releasing preservatives, which are known carcinogens.",
+    cosing_note: "EU CosIng: Formaldehyde (a common keratin treatment byproduct) is listed in Annex II (prohibited) in hair straightening products in the EU. Keratin treatments that release formaldehyde above 0.2% are banned in the EU. Formaldehyde-releasing preservatives have maximum permitted concentrations under Annex V.",
     icon: "💪"
   },
   {

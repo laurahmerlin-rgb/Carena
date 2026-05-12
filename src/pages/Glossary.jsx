@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search, ExternalLink, ShieldCheck, FlaskConical } from 'lucide-react';
+import { ArrowLeft, Search, ExternalLink, ShieldCheck, FlaskConical, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { INGREDIENT_GLOSSARY, CATEGORY_COLORS } from '@/data/ingredientGlossary';
 
@@ -96,11 +96,21 @@ export default function Glossary() {
                         <FlaskConical className="w-3 h-3" /> FDA Noted
                       </span>
                     )}
+                    {ing.cosing_note && (
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium">
+                        <Globe className="w-3 h-3" /> EU CosIng
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">{ing.benefit}</p>
                   {ing.fda_note && (
                     <p className="text-xs text-blue-600 mt-1.5 leading-relaxed">
                       <span className="font-medium">FDA: </span>{ing.fda_note}
+                    </p>
+                  )}
+                  {ing.cosing_note && (
+                    <p className="text-xs text-indigo-600 mt-1 leading-relaxed">
+                      <span className="font-medium">EU CosIng: </span>{ing.cosing_note.replace(/^EU CosIng:\s*/, '')}
                     </p>
                   )}
                   {ing.aliases.length > 0 && (
