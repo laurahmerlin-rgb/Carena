@@ -5,8 +5,8 @@ module.exports = {
   theme: {
   	extend: {
   		fontFamily: {
-  			heading: ['var(--font-heading)'],
-  			body: ['var(--font-body)']
+  			heading: ['TeX Gyre Termes', 'serif'],
+  			body: ['Poppins', 'sans-serif']
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

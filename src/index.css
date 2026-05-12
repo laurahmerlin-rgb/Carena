@@ -1,4 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@font-face {
+  font-family: 'TeX Gyre Termes';
+  src: url('https://fonts.gstatic.com/s/texgyretermes/v1/LYjYdG0bp3Y-KHMtfIEYNcBHEEN_Q5qF.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'TeX Gyre Termes';
+  src: url('https://fonts.gstatic.com/s/texgyretermes/v1/LYjldG0bp3Y-KHMtfIEYNcBHEEN_Q5qa2X0a.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
 
 @tailwind base;
 @tailwind components;
@@ -6,8 +18,8 @@
 
 @layer base {
   :root {
-    --font-heading: 'Playfair Display', serif;
-    --font-body: 'DM Sans', sans-serif;
+    --font-heading: 'TeX Gyre Termes', serif;
+    --font-body: 'Poppins', sans-serif;
 
     --background: 120 18% 97%;
     --foreground: 140 20% 14%;
