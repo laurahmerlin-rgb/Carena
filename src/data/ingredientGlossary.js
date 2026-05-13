@@ -11,6 +11,7 @@
  *    Regulation (EC) No 1223/2009 on cosmetic products.
  *    https://ec.europa.eu/growth/tools-databases/cosing/
  *    Provides INCI names, EU regulatory status (restricted/prohibited/allowed), and Annex references.
+ *    Direct link: https://ec.europa.eu/growth/tools-databases/cosing/
  */
 
 export const INGREDIENT_GLOSSARY = [

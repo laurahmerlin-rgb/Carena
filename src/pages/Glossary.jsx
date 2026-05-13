@@ -146,6 +146,30 @@ export default function Glossary() {
           </div>
         )}
       </div>
+
+      {/* Sources footer */}
+      <div className="px-6 mt-8 pt-6 border-t border-border">
+        <p className="text-xs text-muted-foreground font-medium mb-2">Data Sources</p>
+        <div className="space-y-1.5">
+          {[
+            { label: "Delphi Consensus Study — JAAD 2025", url: "https://pubmed.ncbi.nlm.nih.gov/40233838/" },
+            { label: "FDA Cosmetic Ingredients", url: "https://www.fda.gov/cosmetics/cosmetic-products-ingredients" },
+            { label: "NCBI PubMed (NIH)", url: "https://www.ncbi.nlm.nih.gov" },
+            { label: "EU CosIng Database — European Commission", url: "https://ec.europa.eu/growth/tools-databases/cosing/" },
+          ].map(src => (
+            <a
+              key={src.url}
+              href={src.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+            >
+              <ExternalLink className="w-3 h-3 shrink-0" />
+              {src.label}
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
