@@ -339,7 +339,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Jojoba Oil",
     aliases: ["simmondsia chinensis"],
     category: "Moisturizing",
-    benefit: "Technically a liquid wax that closely mimics the skin's natural sebum. Non-comedogenic, balances oil production, and is suitable for oily and acne-prone skin as well as dry skin. Rich in vitamin E.",
+    benefit: "Despite being called an oil, jojoba is technically a liquid wax — and its molecular structure closely resembles your skin's own sebum, which is why it absorbs so well without leaving a greasy residue. Because it mimics natural sebum, it tends to be non-comedogenic (won't clog pores), making it one of the rare facial oils suitable for oily and acne-prone skin. It's also rich in Vitamin E, adding a mild antioxidant benefit.",
     concerns: ["dry_skin", "oily_skin"],
     icon: "🫒"
   },
@@ -347,7 +347,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Rosehip Oil",
     aliases: ["rosa canina", "rosa rubiginosa"],
     category: "Moisturizing",
-    benefit: "Rich in naturally occurring trans-retinoic acid (vitamin A), linoleic acid, and vitamin C. Helps fade post-acne marks, hyperpigmentation, and fine lines while deeply nourishing the skin.",
+    benefit: "Rosehip oil punches above its weight for a plant-based oil — it's naturally rich in linoleic acid (which helps repair the skin barrier), Vitamin C (brightening), and small amounts of naturally occurring trans-retinoic acid (Vitamin A). This combination makes it genuinely useful for fading post-acne dark marks, hyperpigmentation, and early fine lines while deeply nourishing dry or damaged skin. Best used in the evening, as the Vitamin A content can make skin mildly more sun-sensitive.",
     concerns: ["dark_spots", "dry_skin"],
     icon: "🌹"
   },
@@ -355,7 +355,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Argan Oil",
     aliases: ["argania spinosa", "argania spinosa kernel oil"],
     category: "Moisturizing",
-    benefit: "Rich in oleic and linoleic fatty acids and tocopherols (vitamin E). Nourishes dry skin, reduces TEWL, and tames frizz in hair. A versatile oil for both skin and hair.",
+    benefit: "Argan oil is packed with oleic acid, linoleic acid, and tocopherols (Vitamin E) — a fatty acid profile that makes it a strong emollient for dry skin and frizzy hair alike. On skin, it replenishes lipids and reduces moisture loss without a heavy finish. In hair, it smooths the cuticle, reduces breakage, and adds shine. It's one of the more versatile facial oils in that it suits most skin types, including combination skin.",
     concerns: ["dry_skin"],
     icon: "🫒"
   },
@@ -363,7 +363,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Aloe Vera",
     aliases: ["aloe barbadensis", "aloe barbadensis leaf juice"],
     category: "Soothing",
-    benefit: "Gel from the aloe barbadensis leaf with anti-inflammatory, humectant, and wound-healing properties. FDA has approved aloe as an OTC skin protectant. Ideal for sunburn, sensitive, and irritated skin.",
+    benefit: "The gel inside the aloe barbadensis leaf has been used for centuries to calm sunburnt and irritated skin — and modern research backs up what people have known intuitively. It works on multiple levels: as a humectant (draws moisture in), an anti-inflammatory (reduces redness and swelling), and a mild wound-healing agent. The FDA recognises it as a safe OTC skin protectant. It's one of the gentlest ingredients you'll find, suitable even for the most reactive skin types.",
     concerns: ["redness", "dry_skin"],
     fda_note: "FDA-recognized ingredient in OTC skin protectant products.",
     icon: "🌿"
@@ -374,7 +374,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Biotin",
     aliases: ["vitamin b7", "vitamin h"],
     category: "Hair Growth",
-    benefit: "B-vitamin essential for keratin synthesis. While biotin deficiency causes hair loss, evidence for topical biotin benefit is limited — oral supplementation may benefit those who are deficient.",
+    benefit: "Biotin (Vitamin B7) is essential for the production of keratin — the protein your hair, skin, and nails are made of. The catch: topical biotin sitting on the outside of your hair shaft can't actually enter the follicle, so the science for topical use is weak. Where biotin genuinely helps is internally — if your hair loss or brittleness is linked to a biotin deficiency (more common than many realise), oral supplementation has clinical support. Worth discussing with a doctor before investing heavily in biotin shampoos or serums.",
     concerns: [],
     icon: "🌱"
   },
@@ -382,7 +382,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Keratin",
     aliases: [],
     category: "Hair Repair",
-    benefit: "Structural protein that makes up the hair shaft. Topical keratin treatments temporarily fill gaps in the hair cuticle, reducing frizz, adding shine, and improving manageability. Some keratin treatments contain formaldehyde — FDA has warned about hair smoothing products that release formaldehyde.",
+    benefit: "Keratin is the structural protein that your hair is literally made of — so when it's depleted by heat styling, chemical processing, or environmental damage, keratin treatments make intuitive sense. They work by temporarily filling in gaps in the hair cuticle, dramatically reducing frizz and improving manageability and shine. The important caveat: many salon keratin treatments and some at-home products release formaldehyde during application, which the FDA has specifically warned about. Look for formaldehyde-free formulas, and always ensure good ventilation during use.",
     concerns: [],
     fda_note: "FDA has warned that some keratin hair smoothing products release formaldehyde or formaldehyde-releasing preservatives, which are known carcinogens.",
     cosing_note: "EU CosIng: Formaldehyde (a common keratin treatment byproduct) is listed in Annex II (prohibited) in hair straightening products in the EU. Keratin treatments that release formaldehyde above 0.2% are banned in the EU. Formaldehyde-releasing preservatives have maximum permitted concentrations under Annex V.",
@@ -392,7 +392,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Castor Oil",
     aliases: ["ricinus communis"],
     category: "Hair Growth",
-    benefit: "Thick, ricinoleic acid-rich oil that moisturizes the scalp, may reduce inflammation, and is traditionally used to support hair growth and thickness. Best used as a scalp treatment diluted with a lighter carrier oil.",
+    benefit: "Castor oil is a thick, ricinoleic acid-rich oil with a long tradition of use for hair growth and scalp health. Ricinoleic acid has documented anti-inflammatory properties, which may help with a dry or irritated scalp — a common underlying factor in hair thinning. Clinical evidence specifically for hair growth is limited, but its moisturising and anti-inflammatory benefits for the scalp are real. Because of its viscosity, it's best diluted with a lighter oil (like jojoba or argan) and massaged into the scalp rather than applied to hair lengths.",
     concerns: [],
     icon: "🌱"
   },
@@ -400,7 +400,7 @@ export const INGREDIENT_GLOSSARY = [
     name: "Dimethicone",
     aliases: ["cyclomethicone", "cyclopentasiloxane", "silicone"],
     category: "Silicone",
-    benefit: "Silicone-based polymer that coats the hair shaft to smooth the cuticle, reduce frizz, and add shine. Also used in skin products as a barrier agent and primer. Can cause product buildup in hair with regular use; clarifying shampoo recommended.",
+    benefit: "Dimethicone is a silicone that works by coating the hair shaft or skin surface with a smooth, slip-enhancing film. In hair products, this means reduced frizz, easier detangling, and a glossy finish that lasts. On skin, it acts as a lightweight barrier that locks in moisture and creates a smooth base for makeup. The tradeoff in hair: silicones don't wash out easily with regular shampoo and gradually build up on the hair shaft, leading to weighed-down, dull hair over time. A clarifying shampoo once a week or fortnight resolves this.",
     concerns: [],
     icon: "🔬"
   },
