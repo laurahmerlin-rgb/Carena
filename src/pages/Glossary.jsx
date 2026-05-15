@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search, ExternalLink, ShieldCheck, FlaskConical, Globe } from 'lucide-react';
+import { ArrowLeft, Search, ExternalLink, ShieldCheck, FlaskConical, Globe, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { INGREDIENT_GLOSSARY, CATEGORY_COLORS } from '@/data/ingredientGlossary';
+import IngredientModal from '@/components/glossary/IngredientModal';
 
 const ALL_CATEGORIES = ['All', ...Array.from(new Set(INGREDIENT_GLOSSARY.map(i => i.category)))];
 
@@ -12,6 +13,7 @@ export default function Glossary() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selected, setSelected] = useState(null);
 
   const filtered = INGREDIENT_GLOSSARY.filter(ing => {
     const matchesSearch = !query || ing.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -64,6 +66,9 @@ export default function Glossary() {
         ))}
       </div>
 
+      {/* Modal */}
+      <IngredientModal ingredient={selected} onClose={() => setSelected(null)} />
+
       {/* List */}
       <div className="px-6 space-y-3">
         <AnimatePresence>
@@ -74,7 +79,8 @@ export default function Glossary() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ delay: i * 0.03 }}
-              className="p-4 rounded-2xl bg-card border border-border"
+              onClick={() => setSelected(ing)}
+              className="p-4 rounded-2xl bg-card border border-border cursor-pointer hover:border-primary/40 hover:shadow-sm active:scale-[0.99] transition-all"
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl mt-0.5">{ing.icon}</span>
@@ -102,39 +108,9 @@ export default function Glossary() {
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{ing.benefit}</p>
-                  {ing.fda_note && (
-                    <p className="text-xs text-blue-600 mt-1.5 leading-relaxed">
-                      <span className="font-medium">FDA: </span>{ing.fda_note}
-                    </p>
-                  )}
-                  {ing.cosing_note && (
-                    <p className="text-xs text-indigo-600 mt-1 leading-relaxed">
-                      <span className="font-medium">EU CosIng: </span>{ing.cosing_note.replace(/^EU CosIng:\s*/, '')}
-                    </p>
-                  )}
-                  {ing.aliases.length > 0 && (
-                    <p className="text-xs text-muted-foreground/60 mt-1.5">
-                      Also known as: {ing.aliases.join(', ')}
-                    </p>
-                  )}
-                  {ing.pubmed_refs?.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {ing.pubmed_refs.map((ref, idx) => (
-                        <a
-                          key={idx}
-                          href={ref.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors underline underline-offset-2"
-                        >
-                          <ExternalLink className="w-3 h-3 shrink-0" />
-                          {ref.title}
-                        </a>
-                      ))}
-                    </div>
-                  )}
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{ing.benefit}</p>
                 </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground/40 mt-1 shrink-0" />
               </div>
             </motion.div>
           ))}
