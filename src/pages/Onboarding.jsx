@@ -278,17 +278,37 @@ export default function Onboarding() {
             onNext={goNext}
             onBack={goBack}
           >
-            <div className="grid grid-cols-1 gap-2">
-              {GOALS.filter(g => {
-                const skinGoals = ['Anti-aging', 'Hydration', 'Acne control', 'Brightening'];
-                const hairGoals = ['Hair growth', 'Damage repair', 'Scalp health', 'Frizz control'];
-                if (showSkin && showHair) return true;
-                if (showSkin) return skinGoals.includes(g.label);
-                return hairGoals.includes(g.label);
-              }).map(g => (
-                <SelectableChip key={g.label} {...g} selected={profile.goals.includes(g.label)} onClick={() => toggleMulti('goals', g.label)} />
-              ))}
-            </div>
+            {showSkin && showHair ? (
+              <div className="space-y-6">
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">Skin Goals</p>
+                  <div className="grid grid-cols-1 gap-2">
+                    {GOALS.filter(g => ['Anti-aging', 'Hydration', 'Acne control', 'Brightening'].includes(g.label)).map(g => (
+                      <SelectableChip key={g.label} {...g} selected={profile.goals.includes(g.label)} onClick={() => toggleMulti('goals', g.label)} />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-3">Hair Goals</p>
+                  <div className="grid grid-cols-1 gap-2">
+                    {GOALS.filter(g => ['Hair growth', 'Damage repair', 'Scalp health', 'Frizz control'].includes(g.label)).map(g => (
+                      <SelectableChip key={g.label} {...g} selected={profile.goals.includes(g.label)} onClick={() => toggleMulti('goals', g.label)} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-2">
+                {GOALS.filter(g => {
+                  const skinGoals = ['Anti-aging', 'Hydration', 'Acne control', 'Brightening'];
+                  const hairGoals = ['Hair growth', 'Damage repair', 'Scalp health', 'Frizz control'];
+                  if (showSkin) return skinGoals.includes(g.label);
+                  return hairGoals.includes(g.label);
+                }).map(g => (
+                  <SelectableChip key={g.label} {...g} selected={profile.goals.includes(g.label)} onClick={() => toggleMulti('goals', g.label)} />
+                ))}
+              </div>
+            )}
           </OnboardingStep>
         )}
 
