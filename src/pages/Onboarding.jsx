@@ -47,6 +47,20 @@ const SKIN_CONDITIONS = [
   { label: 'None', icon: '✅', description: 'No specific skin conditions' },
 ];
 
+const HAIR_CONDITIONS = [
+  { label: 'Dandruff', icon: '❄️', description: 'Flaky, itchy scalp' },
+  { label: 'Scalp psoriasis', icon: '🔶', description: 'Thick, scaly scalp patches' },
+  { label: 'Seborrheic dermatitis', icon: '🧫', description: 'Oily flakes, inflamed scalp' },
+  { label: 'Alopecia', icon: '🔵', description: 'Patchy or diffuse hair loss' },
+  { label: 'Androgenetic alopecia', icon: '💈', description: 'Pattern baldness / thinning' },
+  { label: 'Telogen effluvium', icon: '🍂', description: 'Excessive shedding / stress hair loss' },
+  { label: 'Scalp eczema', icon: '🩹', description: 'Itchy, dry, inflamed scalp' },
+  { label: 'Folliculitis', icon: '🔴', description: 'Infected or inflamed hair follicles' },
+  { label: 'Tinea capitis', icon: '🍄', description: 'Fungal scalp infection / ringworm' },
+  { label: 'Scalp acne', icon: '🎯', description: 'Pimples or cysts on the scalp' },
+  { label: 'None', icon: '✅', description: 'No specific hair or scalp conditions' },
+];
+
 const CLIMATES = [
   { label: 'Hot & Humid', icon: '🌴', description: 'Tropical, muggy, sweaty summers' },
   { label: 'Hot & Dry', icon: '🏜️', description: 'Desert-like, low humidity, intense sun' },
@@ -100,17 +114,17 @@ const MAKEUP_STYLE = [
   { label: 'Editorial / Creative', icon: '🎨', description: 'Artistic, experimental, avant-garde' },
 ];
 
-// Steps: 0=focus, 1=skinFocus(if skin/both), 2=types, 3=goals, 4=conditions(if skin), 5=makeupPrefs(if makeup), 6=climate, 7=sensitivities
 export default function Onboarding() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
-  const [focus, setFocus] = useState('');       // 'Skin' | 'Hair' | 'Both'
-  const [skinFocus, setSkinFocus] = useState(''); // 'Skincare' | 'Makeup' | 'Both'
+  const [focus, setFocus] = useState('');
+  const [skinFocus, setSkinFocus] = useState('');
   const [profile, setProfile] = useState({
     skin_type: '',
     hair_type: '',
     goals: [],
     skin_conditions: [],
+    hair_conditions: [],
     climate: '',
     sensitivities: [],
     makeup_coverage: '',
@@ -123,12 +137,12 @@ export default function Onboarding() {
   const showMakeup = showSkin && (skinFocus === 'Makeup' || skinFocus === 'Both');
   const showSkincare = showSkin && (skinFocus === 'Skincare' || skinFocus === 'Both');
 
-  // Build a flat ordered list of step keys to make navigation easy
   const stepKeys = ['focus'];
   if (showSkin) stepKeys.push('skinFocus');
   stepKeys.push('types');
   stepKeys.push('goals');
   if (showSkincare) stepKeys.push('conditions');
+  if (showHair) stepKeys.push('hairConditions');
   if (showMakeup) stepKeys.push('makeupPrefs');
   stepKeys.push('climate');
   stepKeys.push('sensitivities');
@@ -331,6 +345,25 @@ export default function Onboarding() {
           </OnboardingStep>
         )}
 
+        {/* STEP: hairConditions */}
+        {currentKey === 'hairConditions' && (
+          <OnboardingStep
+            key="hairConditions"
+            title="Hair & scalp conditions"
+            subtitle="Do you have any hair or scalp conditions? We'll factor these into every product analysis."
+            step={step}
+            totalSteps={totalSteps}
+            onNext={goNext}
+            onBack={goBack}
+          >
+            <div className="grid grid-cols-1 gap-2">
+              {HAIR_CONDITIONS.map(c => (
+                <SelectableChip key={c.label} {...c} selected={profile.hair_conditions.includes(c.label)} onClick={() => toggleMulti('hair_conditions', c.label)} />
+              ))}
+            </div>
+          </OnboardingStep>
+        )}
+
         {/* STEP: makeupPrefs */}
         {currentKey === 'makeupPrefs' && (
           <OnboardingStep
@@ -423,7 +456,6 @@ export default function Onboarding() {
   );
 }
 
-// Small reusable card for focus/skinFocus selectors
 function FocusCard({ opt, selected, onSelect }) {
   return (
     <motion.button
