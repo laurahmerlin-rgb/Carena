@@ -34,6 +34,7 @@ export default function IngredientsList({ ingredients }) {
             <div key={i} className="inline-block">
               <button
                 onClick={() => match && setExpanded(isExpanded ? null : ing)}
+                aria-label={match ? `View details for ${ing}` : ing}
                 className={`text-xs px-2.5 py-1 rounded-full border transition-all ${
                   match
                     ? `${CATEGORY_COLORS[match.category] || 'bg-accent text-accent-foreground border-border'} cursor-pointer hover:opacity-80`

@@ -53,7 +53,7 @@ export default function Home() {
               {user.full_name?.split(' ')[0] || 'Beauty Lover'}
             </h1>
           </motion.div>
-          <button onClick={() => navigate('/settings')} aria-label="Settings" className="w-10 h-10 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0 overflow-hidden">
+          <button onClick={() => navigate('/settings')} aria-label="Settings and profile" className="w-10 h-10 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0 overflow-hidden">
             {user.avatar_url ? (
               <img src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
             ) : (
@@ -149,9 +149,9 @@ export default function Home() {
 
       {/* Disclaimer */}
       <div className="px-6 mb-6">
-        <div className="flex gap-3 p-4 rounded-2xl bg-amber-50 border border-amber-200">
-          <TriangleAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-800 leading-relaxed">
+        <div className="flex gap-3 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800">
+          <TriangleAlert className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
             <span className="font-semibold">For informational purposes only.</span> Carena is designed to help you understand products and ingredients, and works best alongside your dermatologist or healthcare professional. It does not substitute medical advice.
           </p>
         </div>

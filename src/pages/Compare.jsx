@@ -130,6 +130,7 @@ Provide:
             ) : (
               <button
                 onClick={() => setPickingSide(side)}
+                aria-label={`Pick ${side} product`}
                 className="w-full h-28 rounded-2xl border-2 border-dashed border-primary/30 bg-primary/5 flex flex-col items-center justify-center gap-2 hover:bg-primary/10 transition-colors"
               >
                 <Plus className="w-5 h-5 text-primary" />

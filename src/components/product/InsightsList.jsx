@@ -38,7 +38,7 @@ export default function InsightsList({ pros, cons, warnings }) {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="p-3 rounded-xl bg-green-50 border border-green-100 text-sm text-green-800"
+                className="p-3 rounded-xl bg-green-50 dark:bg-green-950 border border-green-100 dark:border-green-900 text-sm text-green-800 dark:text-green-200"
               >
                 {p}
               </motion.div>
@@ -59,7 +59,7 @@ export default function InsightsList({ pros, cons, warnings }) {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="p-3 rounded-xl bg-yellow-50 border border-yellow-100 text-sm text-yellow-800"
+                className="p-3 rounded-xl bg-yellow-50 dark:bg-yellow-950 border border-yellow-100 dark:border-yellow-900 text-sm text-yellow-800 dark:text-yellow-200"
               >
                 {c}
               </motion.div>

@@ -52,6 +52,8 @@ export default function Glossary() {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
+            aria-label={`Filter by ${cat}`}
+            aria-pressed={activeCategory === cat}
             className={`shrink-0 text-xs px-3 py-1.5 rounded-full border font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               activeCategory === cat
                 ? 'bg-primary text-primary-foreground border-primary'
@@ -95,12 +97,12 @@ export default function Glossary() {
                       </span>
                     )}
                     {ing.fda_note && (
-                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-medium">
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900 font-medium">
                         <FlaskConical className="w-3 h-3" /> FDA Noted
                       </span>
                     )}
                     {ing.cosing_note && (
-                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-medium">
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-900 font-medium">
                         <Globe className="w-3 h-3" /> EU CosIng
                       </span>
                     )}

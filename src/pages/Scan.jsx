@@ -8,18 +8,21 @@ import { motion } from 'framer-motion';
 export default function Scan() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
-  const [uploading, setUploading] = useState(false);
-  const [analyzing, setAnalyzing] = useState(false);
+  const [step, setStep] = useState('idle'); // 'idle' | 'uploading' | 'extracting' | 'analyzing'
   const [preview, setPreview] = useState(null);
+
+  const handleCancel = () => {
+    setStep('idle');
+    setPreview(null);
+  };
 
   const handleFile = async (file) => {
     if (!file) return;
     setPreview(URL.createObjectURL(file));
-    setUploading(true);
+    setStep('uploading');
 
     const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    setUploading(false);
-    setAnalyzing(true);
+    setStep('extracting');
 
     // Get user profile for personalized analysis
     const user = await base44.auth.me();
@@ -39,6 +42,8 @@ export default function Scan() {
         }
       }
     });
+
+    setStep('analyzing');
 
     // Analyze product against user profile
     const analysis = await base44.integrations.Core.InvokeLLM({
@@ -102,7 +107,7 @@ Also provide:
       analysis
     });
 
-    setAnalyzing(false);
+    setStep('idle');
     navigate(`/product/${product.id}`);
   };
 
@@ -115,7 +120,7 @@ Also provide:
 
       <div className="px-6">
         {/* Upload area */}
-        {!preview && !analyzing && (
+        {step === 'idle' && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,21 +180,31 @@ Also provide:
           >
             <div className="relative w-full max-w-sm">
               <img src={preview} alt="Product" className="w-full rounded-3xl object-cover" />
-              {(uploading || analyzing) && (
+              {step !== 'idle' && (
                 <div className="absolute inset-0 bg-background/80 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center gap-4">
                   <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                    {analyzing ? (
+                    {step === 'analyzing' ? (
                       <Sparkles className="w-8 h-8 text-primary animate-pulse" />
                     ) : (
                       <Loader2 className="w-8 h-8 text-primary animate-spin" />
                     )}
                   </div>
                   <div className="text-center">
-                    <p className="font-medium">{uploading ? 'Uploading...' : 'Analyzing product...'}</p>
+                    {step === 'uploading' && <p className="font-medium">Uploading image...</p>}
+                    {step === 'extracting' && <p className="font-medium">Reading product label...</p>}
+                    {step === 'analyzing' && <p className="font-medium">Personalizing your analysis...</p>}
                     <p className="text-sm text-muted-foreground mt-1">
-                      {analyzing ? 'Reading ingredients & personalizing results' : 'Almost there'}
+                      {step === 'uploading' && 'Sending to server'}
+                      {step === 'extracting' && 'Identifying ingredients'}
+                      {step === 'analyzing' && 'Matching to your profile'}
                     </p>
                   </div>
+                  <button
+                    onClick={handleCancel}
+                    className="text-xs text-muted-foreground underline underline-offset-2 mt-1"
+                  >
+                    Cancel
+                  </button>
                 </div>
               )}
             </div>

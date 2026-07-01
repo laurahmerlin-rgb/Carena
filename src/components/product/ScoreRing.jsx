@@ -7,7 +7,7 @@ export default function ScoreRing({ score, size = 80 }) {
   const progress = (score / 10) * circumference;
 
   const color = score >= 7 ? 'text-green-500' : score >= 4 ? 'text-yellow-500' : 'text-red-500';
-  const bgColor = score >= 7 ? 'text-green-100' : score >= 4 ? 'text-yellow-100' : 'text-red-100';
+  const bgColor = score >= 7 ? 'text-green-100 dark:text-green-900' : score >= 4 ? 'text-yellow-100 dark:text-yellow-900' : 'text-red-100 dark:text-red-900';
 
   return (
     <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>

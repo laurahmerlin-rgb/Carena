@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Sun, Moon, Sparkles, Trash2, Loader2, Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -38,6 +39,19 @@ export default function Routine() {
     queryClient.setQueryData(['routine-products'], prev => (prev || []).filter(p => p.id !== product.id));
     try {
       await base44.entities.Product.update(product.id, { in_routine: false, routine_step: '', routine_time: '' });
+      toast('Product removed from routine', {
+        action: {
+          label: 'Undo',
+          onClick: async () => {
+            await base44.entities.Product.update(product.id, {
+              in_routine: true,
+              routine_step: product.routine_step,
+              routine_time: product.routine_time,
+            });
+            queryClient.invalidateQueries({ queryKey: ['routine-products'] });
+          },
+        },
+      });
     } catch (_) {
       queryClient.invalidateQueries({ queryKey: ['routine-products'] });
     }

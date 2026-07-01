@@ -124,9 +124,9 @@ export default function Settings() {
         </Button>
 
         {/* Medical Disclaimer */}
-        <div className="flex gap-3 p-4 rounded-2xl bg-amber-50 border border-amber-200">
-          <TriangleAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-          <p className="text-xs text-amber-800 leading-relaxed">
+        <div className="flex gap-3 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800">
+          <TriangleAlert className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
             <span className="font-semibold">For informational purposes only.</span> Carena is designed to help you understand products and ingredients, and works best alongside your dermatologist or healthcare professional. It does not substitute medical advice, diagnosis, or treatment.
           </p>
         </div>
