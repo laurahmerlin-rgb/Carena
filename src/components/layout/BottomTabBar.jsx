@@ -13,7 +13,7 @@ const TABS = [
 export default function BottomTabBar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { activeTab, switchTab, resetTab } = useTabNavigation();
+  const { switchTab, resetTab, getLastPathForTab } = useTabNavigation();
 
   const currentTab = TABS.find(t =>
     location.pathname === t.path ||
@@ -26,7 +26,8 @@ export default function BottomTabBar() {
       navigate(tab.path);
     } else {
       switchTab(tab.path);
-      navigate(tab.path);
+      const lastPath = getLastPathForTab(tab.path);
+      navigate(lastPath);
     }
   };
 
@@ -42,7 +43,7 @@ export default function BottomTabBar() {
             key={path}
             onClick={() => handleTabPress({ icon: Icon, label, path })}
             aria-label={label}
-            className={`flex-1 flex flex-col items-center justify-center py-2.5 gap-1 transition-colors ${
+            className={`flex-1 flex flex-col items-center justify-center py-2.5 gap-1 min-h-[52px] transition-colors ${
               active ? 'text-primary' : 'text-muted-foreground'
             }`}
           >

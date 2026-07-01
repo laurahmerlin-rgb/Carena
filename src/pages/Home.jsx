@@ -6,6 +6,7 @@ import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompar
 import { motion, AnimatePresence } from 'framer-motion';
 import QuickAction from '@/components/home/QuickAction';
 import { Button } from '@/components/ui/button';
+import PullToRefresh from '@/components/layout/PullToRefresh';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,8 +24,6 @@ export default function Home() {
 
   const profile = user?.profile;
   const queryClient = useQueryClient();
-  const [refreshing, setRefreshing] = useState(false);
-  const [touchStartY, setTouchStartY] = useState(0);
 
   // Redirect to onboarding if no profile
   useEffect(() => {
@@ -33,14 +32,8 @@ export default function Home() {
     }
   }, [user, navigate]);
 
-  const handleTouchStart = (e) => setTouchStartY(e.touches[0].clientY);
-  const handleTouchEnd = async (e) => {
-    const deltaY = e.changedTouches[0].clientY - touchStartY;
-    if (deltaY > 80 && window.scrollY === 0) {
-      setRefreshing(true);
-      await queryClient.invalidateQueries({ queryKey: ['recent-products'] });
-      setTimeout(() => setRefreshing(false), 800);
-    }
+  const handleRefresh = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['recent-products'] });
   };
 
   if (!user) return (
@@ -50,21 +43,8 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-background pb-20" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      {/* Header */}
-      <AnimatePresence>
-        {refreshing && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 48, opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="flex justify-center items-center overflow-hidden bg-background"
-          >
-            <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
-            <span className="ml-2 text-xs text-muted-foreground">Refreshing...</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <PullToRefresh onRefresh={handleRefresh}>
+    <div className="min-h-screen bg-background pb-20">
       <div className="bg-gradient-to-b from-secondary/60 to-background px-6 pb-8" style={{ paddingTop: 'calc(3rem + env(safe-area-inset-top, 0px))' }}>
         <div className="flex items-start justify-between">
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
@@ -208,5 +188,6 @@ export default function Home() {
         </div>
       )}
     </div>
+    </PullToRefresh>
   );
 }

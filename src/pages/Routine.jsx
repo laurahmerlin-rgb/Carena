@@ -7,6 +7,7 @@ import { Sun, Moon, Sparkles, Trash2, Loader2, Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import AddProductForm from '@/components/routine/AddProductForm';
+import PullToRefresh from '@/components/layout/PullToRefresh';
 
 const STEP_ORDER = ['cleanser', 'toner', 'serum', 'moisturizer', 'sunscreen', 'mask', 'shampoo', 'conditioner', 'treatment', 'oil', 'other'];
 
@@ -33,8 +34,13 @@ export default function Routine() {
     .sort((a, b) => STEP_ORDER.indexOf(a.routine_step) - STEP_ORDER.indexOf(b.routine_step));
 
   const removeFromRoutine = async (product) => {
-    await base44.entities.Product.update(product.id, { in_routine: false, routine_step: '', routine_time: '' });
-    queryClient.invalidateQueries({ queryKey: ['routine-products'] });
+    // Optimistic update
+    queryClient.setQueryData(['routine-products'], prev => (prev || []).filter(p => p.id !== product.id));
+    try {
+      await base44.entities.Product.update(product.id, { in_routine: false, routine_step: '', routine_time: '' });
+    } catch (_) {
+      queryClient.invalidateQueries({ queryKey: ['routine-products'] });
+    }
   };
 
   const analyzeRoutine = async () => {
@@ -157,7 +163,12 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
     </motion.div>
   );
 
+  const handleRefresh = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['routine-products'] });
+  };
+
   return (
+    <PullToRefresh onRefresh={handleRefresh}>
     <div className="min-h-screen bg-background pb-20">
       <div className="flex items-center justify-between px-6 pb-4" style={{ paddingTop: 'calc(2.5rem + env(safe-area-inset-top, 0px))' }}>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">My Routine</h1>
@@ -332,5 +343,6 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
         )}
       </AnimatePresence>
     </div>
+    </PullToRefresh>
   );
 }

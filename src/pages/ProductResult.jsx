@@ -10,7 +10,7 @@ import ScoreRing from '@/components/product/ScoreRing';
 import InsightsList from '@/components/product/InsightsList';
 import AlternativesList from '@/components/product/AlternativesList';
 import IngredientsList from '@/components/product/IngredientsList';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { RoutineStepPicker, RoutineTimePicker } from '@/components/product/RoutinePickerSheet';
 
 export default function ProductResult() {
   const navigate = useNavigate();
@@ -139,39 +139,13 @@ export default function ProductResult() {
                   <label className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2 block">
                     Step type
                   </label>
-                  <Select value={routineStep} onValueChange={setRoutineStep}>
-                    <SelectTrigger className="rounded-xl">
-                      <SelectValue placeholder="Select step..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="cleanser">Cleanser</SelectItem>
-                      <SelectItem value="toner">Toner</SelectItem>
-                      <SelectItem value="serum">Serum</SelectItem>
-                      <SelectItem value="moisturizer">Moisturizer</SelectItem>
-                      <SelectItem value="sunscreen">Sunscreen</SelectItem>
-                      <SelectItem value="mask">Mask</SelectItem>
-                      <SelectItem value="shampoo">Shampoo</SelectItem>
-                      <SelectItem value="conditioner">Conditioner</SelectItem>
-                      <SelectItem value="treatment">Treatment</SelectItem>
-                      <SelectItem value="oil">Oil</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <RoutineStepPicker value={routineStep} onChange={setRoutineStep} />
                 </div>
                 <div>
                   <label className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2 block">
                     When to use
                   </label>
-                  <Select value={routineTime} onValueChange={setRoutineTime}>
-                    <SelectTrigger className="rounded-xl">
-                      <SelectValue placeholder="Select time..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="morning">Morning</SelectItem>
-                      <SelectItem value="evening">Evening</SelectItem>
-                      <SelectItem value="both">Both</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <RoutineTimePicker value={routineTime} onChange={setRoutineTime} />
                 </div>
                 <Button
                   className="w-full rounded-full gap-2"

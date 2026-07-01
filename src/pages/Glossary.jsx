@@ -6,6 +6,7 @@ import { Search, ExternalLink, ShieldCheck, FlaskConical, Globe, ChevronRight } 
 import { motion, AnimatePresence } from 'framer-motion';
 import { INGREDIENT_GLOSSARY, CATEGORY_COLORS } from '@/data/ingredientGlossary';
 import IngredientModal from '@/components/glossary/IngredientModal';
+import PullToRefresh from '@/components/layout/PullToRefresh';
 
 const ALL_CATEGORIES = ['All', ...Array.from(new Set(INGREDIENT_GLOSSARY.map(i => i.category)))];
 
@@ -24,6 +25,7 @@ export default function Glossary() {
   });
 
   return (
+    <PullToRefresh onRefresh={async () => {}}>
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
       <div className="px-6 pb-4" style={{ paddingTop: 'calc(2rem + env(safe-area-inset-top, 0px))' }}>
@@ -142,5 +144,6 @@ export default function Glossary() {
         </div>
       </div>
     </div>
+    </PullToRefresh>
   );
 }
