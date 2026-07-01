@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, LogOut, Trash2, Camera } from 'lucide-react';
+import { ArrowLeft, User, LogOut, Trash2, Camera, ShieldAlert } from 'lucide-react';
 import { useRef } from 'react';
 import {
   AlertDialog,
@@ -122,6 +122,20 @@ export default function Settings() {
           <LogOut className="w-4 h-4" />
           Sign Out
         </Button>
+
+        {/* Medical Disclaimer */}
+        <div className="p-4 rounded-2xl bg-muted/60 border border-border space-y-2">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-4 h-4 text-muted-foreground shrink-0" />
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Medical Disclaimer</p>
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Carena is an educational tool designed to help you understand skincare and haircare products and ingredients. It is intended to complement — not replace — the guidance of a licensed dermatologist or qualified healthcare professional.
+          </p>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            Nothing in this app constitutes medical advice, diagnosis, or treatment. Always consult a healthcare professional before making changes to your skincare or haircare routine, especially if you have a skin condition or health concern.
+          </p>
+        </div>
 
         {/* Delete account */}
         <div className="pt-4 border-t border-border">
