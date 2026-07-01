@@ -105,7 +105,8 @@ Provide:
               <div className="p-3 rounded-2xl bg-card border border-border text-center">
                 <button
                   onClick={() => { if (side === 'left') setLeft(null); else setRight(null); setAiSummary(null); }}
-                  className="absolute top-2 right-2 w-5 h-5 rounded-full bg-muted flex items-center justify-center"
+                  aria-label="Remove product"
+                  className="absolute top-1 right-1 w-8 h-8 rounded-full bg-muted flex items-center justify-center"
                 >
                   <X className="w-3 h-3 text-muted-foreground" />
                 </button>

@@ -44,6 +44,7 @@ export default function IngredientModal({ ingredient: ing, onClose }) {
             </div>
             <button
               onClick={onClose}
+              aria-label="Close ingredient details"
               className="p-1.5 rounded-full hover:bg-muted transition-colors text-muted-foreground"
             >
               <X className="w-4 h-4" />

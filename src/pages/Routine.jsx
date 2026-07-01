@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Sun, Moon, Sparkles, Trash2, Loader2, Plus } from 'lucide-react';
+import { Sun, Moon, Sparkles, Trash2, Loader2, Plus } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { motion, AnimatePresence } from 'framer-motion';
 import AddProductForm from '@/components/routine/AddProductForm';
@@ -159,11 +159,8 @@ Suggest real, specific products with name, brand, why they'd benefit this user, 
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      <div className="flex items-center gap-3 px-6 pb-4" style={{ paddingTop: 'calc(2.5rem + env(safe-area-inset-top, 0px))' }}>
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full bg-muted/60">
-          <ArrowLeft className="w-5 h-5" />
-        </Button>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight flex-1">My Routine</h1>
+      <div className="flex items-center justify-between px-6 pb-4" style={{ paddingTop: 'calc(2.5rem + env(safe-area-inset-top, 0px))' }}>
+        <h1 className="font-heading text-2xl font-semibold tracking-tight">My Routine</h1>
         <Button size="sm" className="rounded-full gap-1.5 text-xs h-8 px-3" onClick={() => setShowAddForm(true)}>
           <Plus className="w-3.5 h-3.5" />
           Add product

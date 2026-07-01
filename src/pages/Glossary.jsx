@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Search, ExternalLink, ShieldCheck, FlaskConical, Globe, ChevronRight } from 'lucide-react';
+import { Search, ExternalLink, ShieldCheck, FlaskConical, Globe, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { INGREDIENT_GLOSSARY, CATEGORY_COLORS } from '@/data/ingredientGlossary';
 import IngredientModal from '@/components/glossary/IngredientModal';
@@ -26,14 +26,9 @@ export default function Glossary() {
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <div className="flex items-center gap-3 px-6 pb-4" style={{ paddingTop: 'calc(2rem + env(safe-area-inset-top, 0px))' }}>
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
-          <ArrowLeft className="w-5 h-5" />
-        </Button>
-        <div>
-          <h1 className="font-heading text-2xl font-semibold">Ingredient Glossary</h1>
-          <p className="text-xs text-muted-foreground">{INGREDIENT_GLOSSARY.length} ingredients explained</p>
-        </div>
+      <div className="px-6 pb-4" style={{ paddingTop: 'calc(2rem + env(safe-area-inset-top, 0px))' }}>
+        <h1 className="font-heading text-2xl font-semibold">Ingredient Glossary</h1>
+        <p className="text-xs text-muted-foreground">{INGREDIENT_GLOSSARY.length} ingredients explained</p>
       </div>
 
       {/* Search */}

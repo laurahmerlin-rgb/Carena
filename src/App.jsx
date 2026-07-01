@@ -4,21 +4,22 @@ import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'next-themes';
 import { motion } from 'framer-motion';
+import { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import BottomTabBar from '@/components/layout/BottomTabBar';
+import { TabNavigationProvider } from '@/contexts/TabNavigationContext';
 
-// Add page imports here
-import Home from './pages/Home';
-import Onboarding from './pages/Onboarding';
-import Scan from './pages/Scan';
-import SearchProducts from './pages/SearchProducts';
-import ProductResult from './pages/ProductResult';
-import Routine from './pages/Routine';
-import Glossary from './pages/Glossary';
-import Compare from './pages/Compare';
-import Settings from './pages/Settings';
+const Home = lazy(() => import('./pages/Home'));
+const Onboarding = lazy(() => import('./pages/Onboarding'));
+const Scan = lazy(() => import('./pages/Scan'));
+const SearchProducts = lazy(() => import('./pages/SearchProducts'));
+const ProductResult = lazy(() => import('./pages/ProductResult'));
+const Routine = lazy(() => import('./pages/Routine'));
+const Glossary = lazy(() => import('./pages/Glossary'));
+const Compare = lazy(() => import('./pages/Compare'));
+const Settings = lazy(() => import('./pages/Settings'));
 
 const PageWrapper = ({ children }) => (
   <motion.div
@@ -28,6 +29,12 @@ const PageWrapper = ({ children }) => (
   >
     {children}
   </motion.div>
+);
+
+const LoadingFallback = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-background">
+    <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+  </div>
 );
 
 const AuthenticatedApp = () => {
@@ -55,18 +62,20 @@ const AuthenticatedApp = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/onboarding" element={<Onboarding />} />
-        <Route path="/scan" element={<Scan />} />
-        <Route path="/search" element={<PageWrapper><SearchProducts /></PageWrapper>} />
-        <Route path="/product/:id" element={<PageWrapper><ProductResult /></PageWrapper>} />
-        <Route path="/routine" element={<Routine />} />
-        <Route path="/glossary" element={<Glossary />} />
-        <Route path="/compare" element={<PageWrapper><Compare /></PageWrapper>} />
-        <Route path="/settings" element={<PageWrapper><Settings /></PageWrapper>} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/scan" element={<Scan />} />
+          <Route path="/search" element={<PageWrapper><SearchProducts /></PageWrapper>} />
+          <Route path="/product/:id" element={<PageWrapper><ProductResult /></PageWrapper>} />
+          <Route path="/routine" element={<Routine />} />
+          <Route path="/glossary" element={<Glossary />} />
+          <Route path="/compare" element={<PageWrapper><Compare /></PageWrapper>} />
+          <Route path="/settings" element={<PageWrapper><Settings /></PageWrapper>} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </Suspense>
       {showTabBar && <BottomTabBar />}
     </>
   );
@@ -78,7 +87,9 @@ function App() {
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <QueryClientProvider client={queryClientInstance}>
           <Router>
-            <AuthenticatedApp />
+            <TabNavigationProvider>
+              <AuthenticatedApp />
+            </TabNavigationProvider>
           </Router>
           <Toaster />
         </QueryClientProvider>

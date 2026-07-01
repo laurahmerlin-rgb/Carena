@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { Camera, Upload, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
+import { Camera, Upload, Loader2, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Scan() {
@@ -109,10 +109,7 @@ Also provide:
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <div className="flex items-center gap-3 px-6 pb-6" style={{ paddingTop: 'calc(2.5rem + env(safe-area-inset-top, 0px))' }}>
-        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full bg-muted/60">
-          <ArrowLeft className="w-5 h-5" />
-        </Button>
+      <div className="px-6 pb-6" style={{ paddingTop: 'calc(2.5rem + env(safe-area-inset-top, 0px))' }}>
         <h1 className="font-heading text-2xl font-semibold tracking-tight">Scan Product</h1>
       </div>
 

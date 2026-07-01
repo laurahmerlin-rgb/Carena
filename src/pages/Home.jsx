@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompareArrows, Settings } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import QuickAction from '@/components/home/QuickAction';
 import { Button } from '@/components/ui/button';
 
@@ -52,11 +52,19 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background pb-20" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       {/* Header */}
-      {refreshing && (
-        <div className="flex justify-center py-2">
-          <div className="w-5 h-5 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
-        </div>
-      )}
+      <AnimatePresence>
+        {refreshing && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 48, opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="flex justify-center items-center overflow-hidden bg-background"
+          >
+            <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+            <span className="ml-2 text-xs text-muted-foreground">Refreshing...</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="bg-gradient-to-b from-secondary/60 to-background px-6 pb-8" style={{ paddingTop: 'calc(3rem + env(safe-area-inset-top, 0px))' }}>
         <div className="flex items-start justify-between">
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
@@ -65,7 +73,7 @@ export default function Home() {
               {user.full_name?.split(' ')[0] || 'Beauty Lover'}
             </h1>
           </motion.div>
-          <button onClick={() => navigate('/settings')} className="w-10 h-10 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0 overflow-hidden">
+          <button onClick={() => navigate('/settings')} aria-label="Settings" className="w-10 h-10 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0 overflow-hidden">
             {user.avatar_url ? (
               <img src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
             ) : (
