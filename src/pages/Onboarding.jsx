@@ -143,7 +143,7 @@ export default function Onboarding() {
   if (showSkin) stepKeys.push('skinFocus');
   stepKeys.push('types');
   if (!makeupOnly) stepKeys.push('goals');
-  if (showSkincare) stepKeys.push('conditions');
+  if (showSkincare || makeupOnly) stepKeys.push('conditions');
   if (showHair) stepKeys.push('hairConditions');
   if (showMakeup) stepKeys.push('makeupPrefs');
   stepKeys.push('climate');
