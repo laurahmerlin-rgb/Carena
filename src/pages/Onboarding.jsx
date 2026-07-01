@@ -137,10 +137,12 @@ export default function Onboarding() {
   const showMakeup = showSkin && (skinFocus === 'Makeup' || skinFocus === 'Both');
   const showSkincare = showSkin && (skinFocus === 'Skincare' || skinFocus === 'Both');
 
+  const makeupOnly = focus === 'Skin' && skinFocus === 'Makeup';
+
   const stepKeys = ['focus'];
   if (showSkin) stepKeys.push('skinFocus');
   stepKeys.push('types');
-  stepKeys.push('goals');
+  if (!makeupOnly) stepKeys.push('goals');
   if (showSkincare) stepKeys.push('conditions');
   if (showHair) stepKeys.push('hairConditions');
   if (showMakeup) stepKeys.push('makeupPrefs');
