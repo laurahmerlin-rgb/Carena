@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompareArrows, Settings } from 'lucide-react';
+import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompareArrows, Settings, TriangleAlert } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import QuickAction from '@/components/home/QuickAction';
 import { Button } from '@/components/ui/button';
@@ -145,6 +145,16 @@ export default function Home() {
             <ArrowRight className="w-4 h-4 text-muted-foreground" />
           </motion.button>
         ))}
+      </div>
+
+      {/* Disclaimer */}
+      <div className="px-6 mb-6">
+        <div className="flex gap-3 p-4 rounded-2xl bg-amber-50 border border-amber-200">
+          <TriangleAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-800 leading-relaxed">
+            <span className="font-semibold">For informational purposes only.</span> Carena is designed to help you understand products and ingredients, and works best alongside your dermatologist or healthcare professional. It does not substitute medical advice.
+          </p>
+        </div>
       </div>
 
       {/* Recent Scans */}
