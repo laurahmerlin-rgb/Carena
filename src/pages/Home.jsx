@@ -65,8 +65,12 @@ export default function Home() {
               {user.full_name?.split(' ')[0] || 'Beauty Lover'}
             </h1>
           </motion.div>
-          <button onClick={() => navigate('/settings')} className="w-9 h-9 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0">
-            <Settings className="w-4 h-4 text-muted-foreground" />
+          <button onClick={() => navigate('/settings')} className="w-10 h-10 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0 overflow-hidden">
+            {user.avatar_url ? (
+              <img src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <Settings className="w-4 h-4 text-muted-foreground" />
+            )}
           </button>
         </div>
 

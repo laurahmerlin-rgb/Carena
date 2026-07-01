@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, LogOut, Trash2 } from 'lucide-react';
+import { ArrowLeft, User, LogOut, Trash2, Camera } from 'lucide-react';
+import { useRef } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -19,10 +20,21 @@ export default function Settings() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     base44.auth.me().then(setUser);
   }, []);
+
+  const handleAvatarChange = async (file) => {
+    if (!file) return;
+    setUploading(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    await base44.auth.updateMe({ avatar_url: file_url });
+    setUser(u => ({ ...u, avatar_url: file_url }));
+    setUploading(false);
+  };
 
   const handleSignOut = () => {
     base44.auth.logout('/');
@@ -55,12 +67,40 @@ export default function Settings() {
         {user && (
           <div className="p-5 rounded-2xl bg-card border border-border">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <User className="w-6 h-6 text-primary" />
+              {/* Avatar */}
+              <div className="relative shrink-0">
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border-2 border-border hover:border-primary/40 transition-colors"
+                >
+                  {user.avatar_url ? (
+                    <img src={user.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <User className="w-7 h-7 text-primary" />
+                  )}
+                </button>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
+                  className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-primary flex items-center justify-center shadow"
+                >
+                  <Camera className="w-2.5 h-2.5 text-primary-foreground" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={e => handleAvatarChange(e.target.files[0])}
+                />
               </div>
               <div className="min-w-0">
                 <p className="font-semibold truncate">{user.full_name || 'User'}</p>
                 <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                <p className="text-xs text-primary mt-0.5 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                  {uploading ? 'Uploading...' : 'Tap photo to change'}
+                </p>
               </div>
             </div>
             <Button
