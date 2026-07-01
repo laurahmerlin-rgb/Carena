@@ -404,6 +404,75 @@ export const INGREDIENT_GLOSSARY = [
     concerns: [],
     icon: "🔬"
   },
+
+  // ── Makeup-specific FDA-flagged ingredients ──────────────────────────────
+  {
+    name: "Parabens",
+    aliases: ["methylparaben", "propylparaben", "butylparaben", "ethylparaben", "isobutylparaben"],
+    category: "Preservative (Makeup)",
+    benefit: "Parabens are the most widely used preservatives in cosmetics, including foundations, blushes, mascaras, and eye shadows. They prevent growth of mold, bacteria, and yeast, extending product shelf life significantly. The FDA has reviewed the available data on parabens and found no reason to conclude they are unsafe at levels currently used in cosmetics. However, some studies have raised questions about potential weak estrogen-like activity. The FDA continues to monitor emerging research.",
+    fda_note: "FDA has reviewed parabens in cosmetics and states they appear safe at current usage levels, while continuing to monitor new evidence.",
+    fda_url: "https://www.fda.gov/cosmetics/ingredients/parabens-cosmetics",
+    cosing_note: "Listed in the EU CosIng database; some parabens (propyl, butyl) are restricted in rinse-off products for children under 3 in the EU.",
+    concerns: ["Potential weak estrogenic activity (low-dose studies)", "EU restrictions on certain parabens in children's products"],
+    pubmed_url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5543510/",
+    icon: "⚠️"
+  },
+  {
+    name: "Phthalates",
+    aliases: ["dibutyl phthalate", "DBP", "DEHP", "DEP", "diethyl phthalate"],
+    category: "Makeup Safety",
+    benefit: "Phthalates are a group of chemicals used in nail polish (to reduce brittleness and chipping), hair sprays (to reduce stiffness), and as fragrance carriers in cosmetics. Diethyl phthalate (DEP) is the most commonly used in cosmetics. The FDA monitors phthalate use in cosmetics and considers the science on phthalate safety an area of ongoing research. Dibutyl phthalate (DBP) has been voluntarily phased out by many cosmetic manufacturers.",
+    fda_note: "The FDA is studying phthalates' potential risks, particularly DBP and DEHP. Consumers concerned can check ingredient labels and choose phthalate-free alternatives.",
+    fda_url: "https://www.fda.gov/cosmetics/ingredients/phthalates",
+    cosing_note: "DBP and DEHP are prohibited in cosmetics in the EU.",
+    concerns: ["Potential endocrine disruption at high exposures", "DBP and DEHP banned in EU cosmetics"],
+    pubmed_url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3502614/",
+    icon: "🧪"
+  },
+  {
+    name: "Talc",
+    aliases: ["cosmetic talc", "magnesium silicate", "talcum powder"],
+    category: "Makeup Safety",
+    benefit: "Talc is a mineral used widely in makeup as a filler, to absorb moisture, and to create a smooth, silky texture in face powders, blushes, eye shadows, and setting powders. It gives products a soft feel and helps them glide on skin. The FDA has been actively investigating talc-containing cosmetics, particularly for potential contamination with asbestos — a known carcinogen that can occur naturally near talc deposits. The FDA recommends choosing products tested for asbestos contamination.",
+    fda_note: "FDA has been investigating cosmetic talc for asbestos contamination. The agency advises caution and recommends consumers check for voluntarily tested, asbestos-free certified talc products.",
+    fda_url: "https://www.fda.gov/cosmetics/ingredients/talc",
+    concerns: ["Potential asbestos contamination (a known carcinogen)", "Inhalation risk from loose powder formulations"],
+    pubmed_url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7797870/",
+    icon: "🪨"
+  },
+  {
+    name: "FD&C Color Additives",
+    aliases: ["FD&C Red", "FD&C Blue", "FD&C Yellow", "D&C Red", "D&C Orange", "lake dye", "CI 15850", "CI 45380"],
+    category: "Makeup Safety",
+    benefit: "Color additives — including FD&C dyes and D&C dyes — give makeup its pigment: the red in lipstick, the blue in eye shadow, the blush in cheek powder. Unlike most cosmetic ingredients, all color additives used in cosmetics must be approved by the FDA before they can be used. The FDA maintains a list of certified color additives that have been tested and approved for cosmetic use. Some dyes are restricted to certain uses (e.g., not approved for use near the eyes or in lip products).",
+    fda_note: "Unlike most cosmetic ingredients, color additives in makeup require FDA pre-market approval. Use of unapproved color additives makes a product adulterated under federal law.",
+    fda_url: "https://www.fda.gov/industry/color-additives",
+    cosing_note: "The EU CosIng database lists approved colorants with their permitted uses and restrictions.",
+    concerns: ["Unapproved color additives make a product illegal", "Some dyes restricted by body area (eyes, lips)"],
+    icon: "🎨"
+  },
+  {
+    name: "Lead (in Lipstick)",
+    aliases: ["lead acetate", "lead chromate", "heavy metal contaminant"],
+    category: "Makeup Safety",
+    benefit: "Lead is not intentionally added to lipstick or other cosmetics — it occurs as a trace contaminant from naturally sourced pigments and raw materials. The FDA has studied lead levels in hundreds of lipstick products and found that while trace levels are common, they are generally at or below levels considered safe for cosmetic use. Because lipstick is applied to the lips and may be ingested, the FDA has set a recommended maximum level of 10 ppm (parts per million) for lead in lip cosmetics.",
+    fda_note: "FDA set a recommended 10 ppm lead limit for lip cosmetics. The agency found lead in most tested lipsticks but at levels not expected to pose safety risks under normal use.",
+    fda_url: "https://www.fda.gov/cosmetics/products/limiting-lead-lipstick-and-other-cosmetics",
+    concerns: ["Trace contaminant — not intentionally added", "Cumulative ingestion risk with frequent use", "Higher concern for pregnant individuals"],
+    pubmed_url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3375263/",
+    icon: "⚗️"
+  },
+  {
+    name: "Kohl / Kajal",
+    aliases: ["al-kahal", "surma", "tiro", "tozali", "kwalli", "kohl eyeliner"],
+    category: "Makeup Safety",
+    benefit: "Traditional kohl and kajal are eye cosmetics used for centuries in South Asian, Middle Eastern, and African cultures. They are used as eyeliner and to define the eyes. However, traditional kohl is often made with lead sulfide (galena) as its primary ingredient, unlike modern kajal or kohl-style liners sold in the US which use alternative pigments. The FDA warns that traditional kohl — particularly imported products — may contain dangerous levels of lead and has been associated with lead poisoning cases, especially in children.",
+    fda_note: "FDA warns that traditional kohl/kajal products (especially imported ones) may contain high levels of lead and are not approved for use in the US. They should not be used around children's eyes.",
+    fda_url: "https://www.fda.gov/cosmetics/products/kohl-kajal-al-kahal-surma-tiro-tozali-or-kwalli-any-name-beware-lead-poisoning",
+    concerns: ["May contain very high lead levels", "Lead poisoning risk, especially for children", "Traditional imported products may not comply with FDA standards"],
+    icon: "🖤"
+  },
 ];
 
 export const CATEGORY_COLORS = {
@@ -428,6 +497,8 @@ export const CATEGORY_COLORS = {
   "Hair Repair": "bg-indigo-100 text-indigo-700 border-indigo-200",
   "Hair Care": "bg-amber-100 text-amber-700 border-amber-200",
   "Silicone": "bg-slate-100 text-slate-700 border-slate-200",
+  "Preservative (Makeup)": "bg-gray-100 text-gray-700 border-gray-200",
+  "Makeup Safety": "bg-red-50 text-red-700 border-red-200",
 };
 
 /**
