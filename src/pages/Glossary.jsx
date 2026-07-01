@@ -24,9 +24,9 @@ export default function Glossary() {
   });
 
   return (
-    <div className="min-h-screen bg-background pb-10">
+    <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <div className="flex items-center gap-3 px-6 pt-8 pb-4">
+      <div className="flex items-center gap-3 px-6 pb-4" style={{ paddingTop: 'calc(2rem + env(safe-area-inset-top, 0px))' }}>
         <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="rounded-full">
           <ArrowLeft className="w-5 h-5" />
         </Button>

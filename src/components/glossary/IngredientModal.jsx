@@ -24,6 +24,7 @@ export default function IngredientModal({ ingredient: ing, onClose }) {
           transition={{ type: 'spring', damping: 30, stiffness: 300 }}
           onClick={e => e.stopPropagation()}
           className="bg-card w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl max-h-[88vh] overflow-y-auto shadow-2xl"
+          style={{ overscrollBehavior: 'contain' }}
         >
           {/* Drag handle */}
           <div className="flex justify-center pt-3 pb-1 sm:hidden">
@@ -127,7 +128,7 @@ export default function IngredientModal({ ingredient: ing, onClose }) {
           </div>
 
           {/* Bottom padding for mobile safe area */}
-          <div className="h-4 sm:h-2" />
+          <div style={{ height: 'calc(1rem + env(safe-area-inset-bottom, 0px))' }} />
         </motion.div>
       </motion.div>
     </AnimatePresence>

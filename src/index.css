@@ -99,5 +99,22 @@
 
   body {
     @apply bg-background text-foreground font-body;
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  p, span.content, .ingredient-text, article {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  button, [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  :root {
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-left: env(safe-area-inset-left, 0px);
+    --safe-area-right: env(safe-area-inset-right, 0px);
   }
 }

@@ -83,7 +83,8 @@ Provide a score (1-10) for how well this matches this user, a brief score_explan
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-        className="mt-auto bg-background rounded-t-3xl border-t border-border p-6 pb-10"
+        className="mt-auto bg-background rounded-t-3xl border-t border-border p-6"
+        style={{ paddingBottom: 'calc(2.5rem + env(safe-area-inset-bottom, 0px))' }}
         onClick={e => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">

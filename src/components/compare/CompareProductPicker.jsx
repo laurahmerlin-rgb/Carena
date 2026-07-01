@@ -46,7 +46,7 @@ export default function CompareProductPicker({ products, excluded, onPick, onClo
           </div>
         </div>
 
-        <div className="overflow-y-auto px-6 pb-8 space-y-2">
+        <div className="overflow-y-auto px-6 space-y-2" style={{ paddingBottom: 'calc(2rem + env(safe-area-inset-bottom, 0px))', overscrollBehavior: 'contain' }}>
           {filtered.length === 0 && (
             <p className="text-sm text-muted-foreground text-center py-8">No products found. Scan or search some products first.</p>
           )}

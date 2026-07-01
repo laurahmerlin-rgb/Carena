@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
-import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompareArrows } from 'lucide-react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Camera, Search, Sparkles, FlaskConical, ArrowRight, BookOpen, GitCompareArrows, Settings } from 'lucide-react';
 import { motion } from 'framer-motion';
 import QuickAction from '@/components/home/QuickAction';
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,9 @@ export default function Home() {
   });
 
   const profile = user?.profile;
+  const queryClient = useQueryClient();
+  const [refreshing, setRefreshing] = useState(false);
+  const [touchStartY, setTouchStartY] = useState(0);
 
   // Redirect to onboarding if no profile
   useEffect(() => {
@@ -30,6 +33,16 @@ export default function Home() {
     }
   }, [user, navigate]);
 
+  const handleTouchStart = (e) => setTouchStartY(e.touches[0].clientY);
+  const handleTouchEnd = async (e) => {
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
+    if (deltaY > 80 && window.scrollY === 0) {
+      setRefreshing(true);
+      await queryClient.invalidateQueries({ queryKey: ['recent-products'] });
+      setTimeout(() => setRefreshing(false), 800);
+    }
+  };
+
   if (!user) return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="w-8 h-8 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
@@ -37,15 +50,25 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-background pb-10">
+    <div className="min-h-screen bg-background pb-20" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       {/* Header */}
-      <div className="bg-gradient-to-b from-secondary/60 to-background px-6 pt-12 pb-8">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-          <p className="text-muted-foreground text-sm tracking-wide">Welcome back,</p>
-          <h1 className="font-heading text-4xl font-semibold mt-1 tracking-tight">
-            {user.full_name?.split(' ')[0] || 'Beauty Lover'}
-          </h1>
-        </motion.div>
+      {refreshing && (
+        <div className="flex justify-center py-2">
+          <div className="w-5 h-5 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+        </div>
+      )}
+      <div className="bg-gradient-to-b from-secondary/60 to-background px-6 pb-8" style={{ paddingTop: 'calc(3rem + env(safe-area-inset-top, 0px))' }}>
+        <div className="flex items-start justify-between">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+            <p className="text-muted-foreground text-sm tracking-wide">Welcome back,</p>
+            <h1 className="font-heading text-4xl font-semibold mt-1 tracking-tight">
+              {user.full_name?.split(' ')[0] || 'Beauty Lover'}
+            </h1>
+          </motion.div>
+          <button onClick={() => navigate('/settings')} className="w-9 h-9 rounded-full bg-muted/60 border border-border flex items-center justify-center mt-1 shrink-0">
+            <Settings className="w-4 h-4 text-muted-foreground" />
+          </button>
+        </div>
 
         {/* Profile summary pills */}
         {profile && (
