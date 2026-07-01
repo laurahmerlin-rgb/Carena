@@ -52,7 +52,7 @@ export default function Glossary() {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`shrink-0 text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
+            className={`shrink-0 text-xs px-3 py-1.5 rounded-full border font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               activeCategory === cat
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'bg-card border-border text-muted-foreground hover:border-primary/40'

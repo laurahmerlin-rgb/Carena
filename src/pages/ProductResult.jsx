@@ -11,6 +11,7 @@ import InsightsList from '@/components/product/InsightsList';
 import AlternativesList from '@/components/product/AlternativesList';
 import IngredientsList from '@/components/product/IngredientsList';
 import { RoutineStepPicker, RoutineTimePicker } from '@/components/product/RoutinePickerSheet';
+import PullToRefresh from '@/components/layout/PullToRefresh';
 
 export default function ProductResult() {
   const navigate = useNavigate();
@@ -36,6 +37,20 @@ export default function ProductResult() {
       routine_step: routineStep,
       routine_time: routineTime,
     }),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['product', productId] });
+      const previous = queryClient.getQueryData(['product', productId]);
+      queryClient.setQueryData(['product', productId], old => ({
+        ...old,
+        in_routine: true,
+        routine_step: routineStep,
+        routine_time: routineTime,
+      }));
+      return { previous };
+    },
+    onError: (err, variables, context) => {
+      queryClient.setQueryData(['product', productId], context.previous);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['product', productId] });
       queryClient.invalidateQueries({ queryKey: ['recent-products'] });
@@ -53,6 +68,9 @@ export default function ProductResult() {
   const analysis = product.analysis || {};
 
   return (
+    <PullToRefresh onRefresh={async () => {
+      await queryClient.invalidateQueries({ queryKey: ['product', productId] });
+    }}>
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
       <div className="flex items-center gap-3 px-6 pb-4" style={{ paddingTop: 'calc(2.5rem + env(safe-area-inset-top, 0px))' }}>
@@ -161,5 +179,6 @@ export default function ProductResult() {
         </Tabs>
       </div>
     </div>
+    </PullToRefresh>
   );
 }

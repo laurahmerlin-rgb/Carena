@@ -3,7 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'next-themes';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -21,11 +21,13 @@ const Glossary = lazy(() => import('./pages/Glossary'));
 const Compare = lazy(() => import('./pages/Compare'));
 const Settings = lazy(() => import('./pages/Settings'));
 
-const PageWrapper = ({ children }) => (
+const PageWrapper = ({ children, slideFrom = 'right' }) => (
   <motion.div
-    initial={{ opacity: 0, x: 20 }}
+    initial={{ opacity: 0, x: slideFrom === 'right' ? 24 : -24 }}
     animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.2 }}
+    exit={{ opacity: 0, x: slideFrom === 'right' ? -24 : 24 }}
+    transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
+    style={{ willChange: 'opacity, transform' }}
   >
     {children}
   </motion.div>
@@ -62,20 +64,22 @@ const AuthenticatedApp = () => {
 
   return (
     <>
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/scan" element={<Scan />} />
-          <Route path="/search" element={<PageWrapper><SearchProducts /></PageWrapper>} />
-          <Route path="/product/:id" element={<PageWrapper><ProductResult /></PageWrapper>} />
-          <Route path="/routine" element={<Routine />} />
-          <Route path="/glossary" element={<Glossary />} />
-          <Route path="/compare" element={<PageWrapper><Compare /></PageWrapper>} />
-          <Route path="/settings" element={<PageWrapper><Settings /></PageWrapper>} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </Suspense>
+      <AnimatePresence mode="wait" initial={false}>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageWrapper slideFrom="left"><Home /></PageWrapper>} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/scan" element={<PageWrapper slideFrom="left"><Scan /></PageWrapper>} />
+            <Route path="/search" element={<PageWrapper><SearchProducts /></PageWrapper>} />
+            <Route path="/product/:id" element={<PageWrapper><ProductResult /></PageWrapper>} />
+            <Route path="/routine" element={<PageWrapper slideFrom="left"><Routine /></PageWrapper>} />
+            <Route path="/glossary" element={<PageWrapper slideFrom="left"><Glossary /></PageWrapper>} />
+            <Route path="/compare" element={<PageWrapper><Compare /></PageWrapper>} />
+            <Route path="/settings" element={<PageWrapper><Settings /></PageWrapper>} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </Suspense>
+      </AnimatePresence>
       {showTabBar && <BottomTabBar />}
     </>
   );

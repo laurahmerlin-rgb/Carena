@@ -183,11 +183,15 @@ export default function Home() {
                   {product.brand && <p className="text-xs text-muted-foreground mt-0.5">{product.brand}</p>}
                 </div>
                 {product.analysis?.score != null && (
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
-                    product.analysis.score >= 7 ? 'bg-green-100 text-green-700' :
-                    product.analysis.score >= 4 ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-red-100 text-red-700'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                      product.analysis.score >= 7 ? 'bg-green-100 text-green-700' :
+                      product.analysis.score >= 4 ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-red-100 text-red-700'
+                    }`}
+                    aria-label={`Match score: ${product.analysis.score} out of 10`}
+                    role="img"
+                  >
                     {product.analysis.score}
                   </div>
                 )}
