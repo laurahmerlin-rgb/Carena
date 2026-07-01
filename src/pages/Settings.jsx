@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, User, LogOut, Trash2, Camera, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, User, LogOut, Trash2, Camera, TriangleAlert } from 'lucide-react';
 import { useRef } from 'react';
 import {
   AlertDialog,
@@ -124,16 +124,10 @@ export default function Settings() {
         </Button>
 
         {/* Medical Disclaimer */}
-        <div className="p-4 rounded-2xl bg-muted/60 border border-border space-y-2">
-          <div className="flex items-center gap-2">
-            <ShieldAlert className="w-4 h-4 text-muted-foreground shrink-0" />
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">Medical Disclaimer</p>
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Carena is an educational tool designed to help you understand skincare and haircare products and ingredients. It is intended to complement — not replace — the guidance of a licensed dermatologist or qualified healthcare professional.
-          </p>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Nothing in this app constitutes medical advice, diagnosis, or treatment. Always consult a healthcare professional before making changes to your skincare or haircare routine, especially if you have a skin condition or health concern.
+        <div className="flex gap-3 p-4 rounded-2xl bg-amber-50 border border-amber-200">
+          <TriangleAlert className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+          <p className="text-xs text-amber-800 leading-relaxed">
+            <span className="font-semibold">For informational purposes only.</span> Carena is designed to help you understand products and ingredients, and works best alongside your dermatologist or healthcare professional. It does not substitute medical advice, diagnosis, or treatment.
           </p>
         </div>
 
