@@ -166,7 +166,9 @@ export default function Onboarding() {
   };
 
   const handleSave = async () => {
+    const me = await base44.auth.me();
     await base44.auth.updateMe({ profile: { ...profile, focus, skin_focus: skinFocus } });
+    base44.functions.invoke('sendWelcomeEmail', { user_email: me.email, user_name: me.full_name });
     navigate('/');
   };
 
