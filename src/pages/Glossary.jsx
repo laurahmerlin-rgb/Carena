@@ -72,14 +72,15 @@ export default function Glossary() {
       <div className="px-6 space-y-3">
         <AnimatePresence>
           {filtered.map((ing, i) => (
-            <motion.div
+            <motion.button
+              type="button"
               key={ing.name}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ delay: i * 0.03 }}
               onClick={() => setSelected(ing)}
-              className="p-4 rounded-2xl bg-card border border-border cursor-pointer hover:border-primary/40 hover:shadow-sm active:scale-[0.99] transition-all"
+              className="w-full text-left p-4 rounded-2xl bg-card border border-border cursor-pointer hover:border-primary/40 hover:shadow-sm active:scale-[0.99] transition-all"
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl mt-0.5">{ing.icon}</span>
@@ -111,7 +112,7 @@ export default function Glossary() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-muted-foreground/40 mt-1 shrink-0" />
               </div>
-            </motion.div>
+            </motion.button>
           ))}
         </AnimatePresence>
 

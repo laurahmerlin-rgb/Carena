@@ -43,12 +43,13 @@ export default function BottomTabBar() {
             key={path}
             onClick={() => handleTabPress({ icon: Icon, label, path })}
             aria-label={label}
+            aria-current={active ? 'page' : undefined}
             className={`flex-1 flex flex-col items-center justify-center py-2.5 gap-1 min-h-[56px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset ${
               active ? 'text-primary' : 'text-muted-foreground'
             }`}
           >
             <Icon className={`w-5 h-5 ${active ? 'stroke-[2.5px]' : 'stroke-2'}`} />
-            <span className="text-xs font-medium">{label}</span>
+            <span className="text-[11px] font-medium">{label}</span>
           </button>
         );
       })}

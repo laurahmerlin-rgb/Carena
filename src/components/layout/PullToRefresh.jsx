@@ -8,12 +8,9 @@ export default function PullToRefresh({ onRefresh, children }) {
   const [delta, setDelta] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const startYRef = useRef(0);
-  const containerRef = useRef(null);
 
   const handleTouchStart = useCallback((e) => {
-    const el = containerRef.current;
-    const scrollTop = el ? el.scrollTop : window.scrollY;
-    if (scrollTop !== 0) return;
+    if (window.scrollY !== 0) return;
     startYRef.current = e.touches[0].clientY;
     setDragging(true);
   }, []);
@@ -39,7 +36,7 @@ export default function PullToRefresh({ onRefresh, children }) {
   const showIndicator = delta > 8 || refreshing;
 
   return (
-    <div ref={containerRef} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
+    <div style={{ touchAction: 'pan-y' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
       <AnimatePresence>
         {showIndicator && (
           <motion.div
