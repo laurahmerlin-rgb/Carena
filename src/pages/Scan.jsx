@@ -201,7 +201,7 @@ Also provide:
                   </div>
                   <button
                     onClick={handleCancel}
-                    className="text-xs text-muted-foreground underline underline-offset-2 mt-1"
+                    className="h-11 px-5 text-xs text-muted-foreground underline underline-offset-2 mt-1"
                   >
                     Cancel
                   </button>
