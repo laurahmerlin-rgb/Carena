@@ -3,15 +3,10 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const body = await req.json();
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { user_email, user_name } = body;
-
-    if (!user_email) {
-      return Response.json({ error: 'Missing user_email' }, { status: 400 });
-    }
-
-    const firstName = user_name ? user_name.split(' ')[0] : 'there';
+    const firstName = user.full_name ? user.full_name.split(' ')[0] : 'there';
 
     const htmlBody = `
 <!DOCTYPE html>
@@ -117,7 +112,7 @@ Deno.serve(async (req) => {
     `.trim();
 
     await base44.asServiceRole.integrations.Core.SendEmail({
-      to: user_email,
+      to: user.email,
       subject: 'Welcome to Carena 🌿',
       body: htmlBody,
       from_name: 'Carena',
