@@ -1,12 +1,40 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Loader2, Sparkles } from 'lucide-react';
+import { X, Loader2, Sparkles, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 
 const STEPS = ['cleanser', 'toner', 'serum', 'moisturizer', 'sunscreen', 'mask', 'shampoo', 'conditioner', 'treatment', 'oil', 'other'];
 const TIMES = ['morning', 'evening', 'both'];
+
+function PickerDrawer({ open, onOpenChange, title, options, value, onSelect }) {
+  return (
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>{title}</DrawerTitle>
+        </DrawerHeader>
+        <div className="px-4 pb-6 space-y-1" style={{ paddingBottom: 'calc(1.5rem + env(safe-area-inset-bottom, 0px))' }}>
+          {options.map(opt => (
+            <button
+              key={opt}
+              onClick={() => { onSelect(opt); onOpenChange(false); }}
+              className={`w-full text-left px-4 py-3.5 rounded-xl text-sm font-medium capitalize transition-colors ${
+                value === opt
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted/50 text-foreground hover:bg-muted'
+              }`}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 export default function AddProductForm({ onClose, onAdded }) {
   const [name, setName] = useState('');
@@ -14,6 +42,8 @@ export default function AddProductForm({ onClose, onAdded }) {
   const [step, setStep] = useState('');
   const [time, setTime] = useState('');
   const [saving, setSaving] = useState(false);
+  const [stepOpen, setStepOpen] = useState(false);
+  const [timeOpen, setTimeOpen] = useState(false);
 
   const canSubmit = name.trim() && step && time;
 
@@ -24,7 +54,6 @@ export default function AddProductForm({ onClose, onAdded }) {
     const user = await base44.auth.me();
     const profile = user.profile || {};
 
-    // Get AI analysis for the typed product
     const analysis = await base44.integrations.Core.InvokeLLM({
       prompt: `You are a skin/hair care expert. Give a PERSONALIZED analysis of this product for this user.
 
@@ -89,7 +118,7 @@ Provide a score (1-10) for how well this matches this user, a brief score_explan
       >
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-heading text-xl font-semibold">Add a product</h2>
-          <button onClick={onClose} className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+          <button onClick={onClose} className="w-11 h-11 rounded-full bg-muted flex items-center justify-center">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -101,7 +130,7 @@ Provide a score (1-10) for how well this matches this user, a brief score_explan
               placeholder="e.g. CeraVe Moisturizing Cream"
               value={name}
               onChange={e => setName(e.target.value)}
-              className="rounded-xl"
+              className="rounded-xl h-11"
             />
           </div>
 
@@ -111,47 +140,39 @@ Provide a score (1-10) for how well this matches this user, a brief score_explan
               placeholder="e.g. CeraVe"
               value={brand}
               onChange={e => setBrand(e.target.value)}
-              className="rounded-xl"
+              className="rounded-xl h-11"
             />
           </div>
 
           <div>
-            <label className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2 block">Step *</label>
-            <div className="flex flex-wrap gap-2">
-              {STEPS.map(s => (
-                <button
-                  key={s}
-                  onClick={() => setStep(s)}
-                  className={`text-xs px-3 py-1.5 rounded-full border font-medium capitalize transition-all ${
-                    step === s ? 'bg-primary text-primary-foreground border-primary' : 'bg-card border-border text-muted-foreground hover:border-primary/40'
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
+            <label className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-1.5 block">Step *</label>
+            <button
+              onClick={() => setStepOpen(true)}
+              className={`w-full h-11 flex items-center justify-between px-4 rounded-xl border text-sm font-medium capitalize transition-colors ${
+                step ? 'border-primary/40 bg-primary/5 text-foreground' : 'border-input bg-background text-muted-foreground'
+              }`}
+            >
+              {step || 'Select a step…'}
+              <ChevronDown className="w-4 h-4 opacity-50" />
+            </button>
           </div>
 
           <div>
-            <label className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2 block">When to use *</label>
-            <div className="flex gap-2">
-              {TIMES.map(t => (
-                <button
-                  key={t}
-                  onClick={() => setTime(t)}
-                  className={`text-xs px-4 py-1.5 rounded-full border font-medium capitalize transition-all ${
-                    time === t ? 'bg-primary text-primary-foreground border-primary' : 'bg-card border-border text-muted-foreground hover:border-primary/40'
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
+            <label className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-1.5 block">When to use *</label>
+            <button
+              onClick={() => setTimeOpen(true)}
+              className={`w-full h-11 flex items-center justify-between px-4 rounded-xl border text-sm font-medium capitalize transition-colors ${
+                time ? 'border-primary/40 bg-primary/5 text-foreground' : 'border-input bg-background text-muted-foreground'
+              }`}
+            >
+              {time || 'Select timing…'}
+              <ChevronDown className="w-4 h-4 opacity-50" />
+            </button>
           </div>
         </div>
 
         <Button
-          className="w-full mt-6 rounded-full gap-2 h-11"
+          className="w-full mt-6 rounded-full gap-2"
           disabled={!canSubmit || saving}
           onClick={handleAdd}
         >
@@ -168,6 +189,23 @@ Provide a score (1-10) for how well this matches this user, a brief score_explan
           )}
         </Button>
       </motion.div>
+
+      <PickerDrawer
+        open={stepOpen}
+        onOpenChange={setStepOpen}
+        title="Select Step"
+        options={STEPS}
+        value={step}
+        onSelect={setStep}
+      />
+      <PickerDrawer
+        open={timeOpen}
+        onOpenChange={setTimeOpen}
+        title="When to Use"
+        options={TIMES}
+        value={time}
+        onSelect={setTime}
+      />
     </motion.div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, ExternalLink, ShieldCheck, FlaskConical, Globe, ChevronRight } from 'lucide-react';
@@ -12,6 +13,7 @@ const ALL_CATEGORIES = ['All', ...Array.from(new Set(INGREDIENT_GLOSSARY.map(i =
 
 export default function Glossary() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [selected, setSelected] = useState(null);
@@ -25,7 +27,7 @@ export default function Glossary() {
   });
 
   return (
-    <PullToRefresh onRefresh={async () => {}}>
+    <PullToRefresh onRefresh={() => queryClient.invalidateQueries()}>
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
       <div className="px-6 pb-4" style={{ paddingTop: 'calc(2rem + env(safe-area-inset-top, 0px))' }}>
