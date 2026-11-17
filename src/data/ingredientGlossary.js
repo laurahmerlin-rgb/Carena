@@ -12,6 +12,10 @@
  *    https://ec.europa.eu/growth/tools-databases/cosing/
  *    Provides INCI names, EU regulatory status (restricted/prohibited/allowed), and Annex references.
  *    Direct link: https://ec.europa.eu/growth/tools-databases/cosing/
+ * 5. Cosmetic Ingredient Review (CIR) Expert Panel safety assessments:
+ *    https://cir-reports.cir-safety.org — independent safety reviews of cosmetic ingredients by INCI name.
+ * 6. PubChem (NIH / National Library of Medicine):
+ *    https://pubchem.ncbi.nlm.nih.gov — chemical identity, structure, and hazard data per ingredient.
  */
 
 export const INGREDIENT_GLOSSARY = [
@@ -500,6 +504,21 @@ export const CATEGORY_COLORS = {
   "Preservative (Makeup)": "bg-gray-100 text-gray-700 border-gray-200",
   "Makeup Safety": "bg-red-50 text-red-700 border-red-200",
 };
+
+/**
+ * CIR (Cosmetic Ingredient Review) safety reports — search by INCI name.
+ * The CIR portal is a single-page database, so we link to it directly.
+ */
+export function getCirUrl() {
+  return "https://cir-reports.cir-safety.org/";
+}
+
+/**
+ * PubChem (NIH) lookup for an ingredient by its INCI name.
+ */
+export function getPubChemUrl(name) {
+  return `https://pubchem.ncbi.nlm.nih.gov/#query=${encodeURIComponent(name)}`;
+}
 
 /**
  * Given a list of ingredient strings, returns a map of

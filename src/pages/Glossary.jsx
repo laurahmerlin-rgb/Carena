@@ -135,6 +135,8 @@ export default function Glossary() {
             { label: "NCBI PubMed (NIH)", url: "https://www.ncbi.nlm.nih.gov" },
             { label: "EU CosIng Database — European Commission", url: "https://ec.europa.eu/growth/tools-databases/cosing/" },
             { label: "FDA Makeup Safety — Cosmetic Products", url: "https://www.fda.gov/cosmetics/cosmetic-products/makeup" },
+            { label: "CIR — Cosmetic Ingredient Review Reports", url: "https://cir-reports.cir-safety.org" },
+            { label: "PubChem — NIH / National Library of Medicine", url: "https://pubchem.ncbi.nlm.nih.gov" },
           ].map(src => (
             <a
               key={src.url}

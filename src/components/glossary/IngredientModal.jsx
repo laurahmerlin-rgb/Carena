@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, ShieldCheck, FlaskConical, Globe } from 'lucide-react';
-import { CATEGORY_COLORS } from '@/data/ingredientGlossary';
+import { CATEGORY_COLORS, getCirUrl, getPubChemUrl } from '@/data/ingredientGlossary';
 
 export default function IngredientModal({ ingredient: ing, onClose }) {
   if (!ing) return null;
@@ -126,6 +126,31 @@ export default function IngredientModal({ ingredient: ing, onClose }) {
                 </div>
               </div>
             )}
+
+            {/* External databases */}
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1.5">Look it up</h3>
+              <div className="space-y-1.5">
+                <a
+                  href={getCirUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-1.5 text-xs text-primary hover:underline underline-offset-2"
+                >
+                  <ShieldCheck className="w-3 h-3 shrink-0 mt-0.5" />
+                  CIR Safety Report — search "{ing.name}"
+                </a>
+                <a
+                  href={getPubChemUrl(ing.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-1.5 text-xs text-primary hover:underline underline-offset-2"
+                >
+                  <FlaskConical className="w-3 h-3 shrink-0 mt-0.5" />
+                  PubChem — {ing.name}
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Bottom padding for mobile safe area */}
