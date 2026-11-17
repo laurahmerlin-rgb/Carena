@@ -4,7 +4,8 @@ import { AnimatePresence } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import OnboardingStep from '@/components/onboarding/OnboardingStep';
 import SelectableChip from '@/components/onboarding/SelectableChip';
-import { Sparkles } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Sparkles, Pill } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const SKIN_TYPES = [
@@ -126,6 +127,7 @@ export default function Onboarding() {
     skin_conditions: [],
     hair_conditions: [],
     climate: '',
+    medications: '',
     sensitivities: [],
     makeup_coverage: '',
     makeup_finish: '',
@@ -145,6 +147,7 @@ export default function Onboarding() {
   if (!makeupOnly) stepKeys.push('goals');
   if (showSkincare || makeupOnly) stepKeys.push('conditions');
   if (showHair) stepKeys.push('hairConditions');
+  stepKeys.push('medications');
   if (showMakeup) stepKeys.push('makeupPrefs');
   stepKeys.push('climate');
   stepKeys.push('sensitivities');
@@ -364,6 +367,43 @@ export default function Onboarding() {
               {HAIR_CONDITIONS.map(c => (
                 <SelectableChip key={c.label} {...c} selected={profile.hair_conditions.includes(c.label)} onClick={() => toggleMulti('hair_conditions', c.label)} />
               ))}
+            </div>
+          </OnboardingStep>
+        )}
+
+        {/* STEP: medications */}
+        {currentKey === 'medications' && (
+          <OnboardingStep
+            key="medications"
+            title="Medications"
+            subtitle="Have you used any medication to treat a skin or hair condition? This helps us factor treatments into your analysis."
+            step={step}
+            totalSteps={totalSteps}
+            onNext={goNext}
+            onBack={goBack}
+          >
+            <div className="space-y-4">
+              <Textarea
+                value={profile.medications}
+                onChange={(e) => setProfile(p => ({ ...p, medications: e.target.value }))}
+                placeholder="e.g. Tretinoin, isotretinoin, antibiotics, minoxidil, spironolactone..."
+                className="min-h-[120px] rounded-2xl bg-card"
+              />
+              <button
+                type="button"
+                onClick={() => setProfile(p => ({ ...p, medications: '' }))}
+                className={`inline-flex items-center gap-2 text-xs px-3 py-2 rounded-full border font-medium transition-all ${
+                  profile.medications === ''
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'bg-card border-border text-muted-foreground hover:border-primary/40'
+                }`}
+              >
+                <Pill className="w-3.5 h-3.5" />
+                I haven't used any medication
+              </button>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Include prescription and over-the-counter treatments, current or past. This is informational only and does not replace advice from your doctor.
+              </p>
             </div>
           </OnboardingStep>
         )}
